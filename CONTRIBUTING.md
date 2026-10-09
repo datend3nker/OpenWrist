@@ -15,6 +15,12 @@ humans and agents alike.
 - **Report watch apps** that OpenWrist does not show or install correctly
   with the app compatibility form.
 - **Write code or docs** through pull requests, following the rules below.
+  Looking for a start? Issues labeled
+  [`good first issue`](https://github.com/datend3nker/OpenWrist/labels/good%20first%20issue)
+  are small and well described,
+  [`help wanted`](https://github.com/datend3nker/OpenWrist/labels/help%20wanted)
+  marks work where help is especially welcome. Comment on the issue before
+  you start, so nobody works on the same thing twice.
 
 ## AI-assisted contributions
 

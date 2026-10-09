@@ -113,7 +113,9 @@ companion is needed to install it with OpenWrist.
 ## Contributing
 
 Contributions are welcome, and so are questions: ask them in
-[Discussions](https://github.com/datend3nker/OpenWrist/discussions).
+[Discussions](https://github.com/datend3nker/OpenWrist/discussions). New here?
+Look for issues labeled
+[`good first issue`](https://github.com/datend3nker/OpenWrist/labels/good%20first%20issue).
 
 OpenWrist is built **with AI, for people**: using AI tools is fine, but you
 are responsible for what you submit.
