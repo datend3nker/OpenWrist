@@ -1,0 +1,41 @@
+# Architecture
+
+This document describes the planned structure. No module exists yet. Modules
+are created once there is code for them; until then the list below is a plan,
+not a commitment.
+
+## Ground rules
+
+1. **Only the app module is UI-specific.** Only `app` depends on Compose for
+   Wear OS and other UI libraries. Everything else is testable without a
+   device or emulator.
+2. **Dependencies point inward.** Domain modules depend on nothing but the
+   Kotlin standard library and the F-Droid libraries; `app` depends on all of
+   them.
+3. **Only watch builds are offered.** A version counts as compatible only if
+   its manifest declares `android.hardware.type.watch`. Otherwise a phone build
+   with the same `applicationId` and a higher `versionCode` would win.
+4. **Installs are verified.** Index signatures and APK checksums and
+   signatures are checked before anything is installed.
+5. **Every user-visible string is translatable.** Only `app` produces text for
+   the user, always from string resources. Domain modules return typed errors
+   and sealed classes, never display strings. See
+   [ADR 0004](decisions/0004-translations-with-android-resources.md).
+
+## Planned modules
+
+All modules live in one Gradle project. Names are a proposal.
+
+| Module | Responsibility |
+|---|---|
+| `repo` | Repository index: download, parse, verify, local cache |
+| `install` | APK download, verification, installation, updates |
+| `app` | Wear OS user interface (Compose for Wear OS), navigation, translations |
+
+## Open questions
+
+- Where the code lives: a module in the F-Droid client fork or this
+  repository, see [ADR 0003](decisions/0003-build-on-fdroid-libraries.md).
+- Installs go through `PackageInstaller` sessions with
+  `REQUEST_INSTALL_PACKAGES` and show the system confirmation dialog. How this
+  behaves on real watches is not verified yet.
