@@ -12,6 +12,8 @@ humans and agents alike.
 - **Report bugs and suggest features** with the issue forms.
 - **Test on your watch** and send a watch report. You do not need to write
   code for this, and it helps a lot: the developers only own a few watches.
+- **Report watch apps** that OpenWrist does not show or install correctly
+  with the app compatibility form.
 - **Write code or docs** through pull requests, following the rules below.
 
 ## AI-assisted contributions
