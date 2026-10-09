@@ -4,6 +4,14 @@ OpenWrist should stay understandable for humans, even though much of the code is
 written with AI assistance. These rules apply to every contribution, from
 humans and agents alike.
 
+## Ways to help
+
+- **Ask and discuss** in
+  [Discussions](https://github.com/datend3nker/OpenWrist/discussions).
+  Questions do not belong in issues.
+- **Report bugs and suggest features** with the issue forms.
+- **Write code or docs** through pull requests, following the rules below.
+
 ## AI-assisted contributions
 
 OpenWrist is built with AI, for people. Using AI tools is welcome. Handing your

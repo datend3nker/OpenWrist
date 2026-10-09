@@ -112,8 +112,11 @@ companion is needed to install it with OpenWrist.
 
 ## Contributing
 
-Contributions are welcome. OpenWrist is built **with AI, for people**: using AI
-tools is fine, but you are responsible for what you submit.
+Contributions are welcome, and so are questions: ask them in
+[Discussions](https://github.com/datend3nker/OpenWrist/discussions).
+
+OpenWrist is built **with AI, for people**: using AI tools is fine, but you
+are responsible for what you submit.
 
 - You must understand every line you contribute and be able to explain it.
 - Fully automated or agentic contributions (PRs, issues or comments from bots
