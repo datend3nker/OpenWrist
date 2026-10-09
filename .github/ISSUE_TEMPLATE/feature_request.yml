@@ -1,0 +1,31 @@
+name: Feature request
+description: Suggest an idea or improvement.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please write this yourself; machine translation is fine and nobody
+        is judged for grammar or spelling. Check the
+        [roadmap](https://github.com/datend3nker/OpenWrist/blob/main/docs/roadmap.md)
+        first, maybe it is already planned.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the situation, not only the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+    validations:
+      required: true
+  - type: checkboxes
+    id: human
+    attributes:
+      label: AI policy
+      options:
+        - label: I wrote this request myself (translation is fine).
+          required: true

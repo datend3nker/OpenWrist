@@ -1,0 +1,47 @@
+name: Bug report
+description: Something does not work as expected.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please write this
+        yourself; machine translation is fine and nobody is judged for
+        grammar or spelling. Security problems go through
+        [SECURITY.md](https://github.com/datend3nker/OpenWrist/blob/main/SECURITY.md),
+        not here.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Tap ...
+        3. See ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: OpenWrist version or commit
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: System
+      description: Watch model, Wear OS version and phone model, if relevant.
+  - type: checkboxes
+    id: human
+    attributes:
+      label: AI policy
+      options:
+        - label: I wrote this report myself (translation is fine).
+          required: true
