@@ -10,6 +10,8 @@ humans and agents alike.
   [Discussions](https://github.com/datend3nker/OpenWrist/discussions).
   Questions do not belong in issues.
 - **Report bugs and suggest features** with the issue forms.
+- **Test on your watch** and send a watch report. You do not need to write
+  code for this, and it helps a lot: the developers only own a few watches.
 - **Write code or docs** through pull requests, following the rules below.
 
 ## AI-assisted contributions

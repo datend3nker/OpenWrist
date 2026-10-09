@@ -1,0 +1,83 @@
+name: Watch report
+description: Tell us how OpenWrist works on your watch.
+labels: [hardware]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        OpenWrist has to work on many watches, but the developers only own a
+        few. A short report from your watch helps a lot, also when everything
+        works. Please write this yourself; machine translation is fine and
+        nobody is judged for grammar or spelling.
+  - type: input
+    id: watch
+    attributes:
+      label: Watch model
+      placeholder: e.g. Samsung Galaxy Watch6, Google Pixel Watch 2, TicWatch Pro 5
+    validations:
+      required: true
+  - type: input
+    id: wear-os
+    attributes:
+      label: Wear OS version
+      description: Settings, System, About. The One UI Watch version helps too, if you have one.
+      placeholder: e.g. Wear OS 5
+    validations:
+      required: true
+  - type: dropdown
+    id: device-kind
+    attributes:
+      label: Real watch or emulator?
+      options:
+        - Real watch
+        - Emulator
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: OpenWrist version or commit
+    validations:
+      required: true
+  - type: dropdown
+    id: permission
+    attributes:
+      label: Permission to install apps ("Install unknown apps")
+      options:
+        - Granted on the watch
+        - Needed ADB
+        - Could not grant it
+        - Not tested
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: Installing an app
+      options: [Works, Partly works, Does not work, Not tested]
+    validations:
+      required: true
+  - type: dropdown
+    id: update
+    attributes:
+      label: Updating an app
+      options: [Works, Partly works, Does not work, Not tested]
+    validations:
+      required: true
+  - type: input
+    id: first-load
+    attributes:
+      label: How long did the first load of the app list take?
+      placeholder: e.g. about 2 minutes
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else?
+      description: What did you notice? Is the screen easy to use on your watch?
+  - type: checkboxes
+    id: human
+    attributes:
+      label: AI policy
+      options:
+        - label: I wrote this report myself (translation is fine).
+          required: true
