@@ -1,0 +1,73 @@
+name: App compatibility problem
+description: A watch app is missing, does not install or shows the wrong version in OpenWrist.
+labels: [compatibility]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please write this yourself; machine translation is fine and nobody
+        is judged for grammar or spelling.
+
+        Before you report: OpenWrist only shows versions whose manifest
+        declares `android.hardware.type.watch`. If an app is missing because
+        its watch build does not declare this, the app's developers have to
+        change it, see
+        [Publishing your watch app](https://github.com/datend3nker/OpenWrist#publishing-your-watch-app-for-openwrist).
+        Problems with OpenWrist go here, not to F-Droid or to the app's
+        developers.
+  - type: input
+    id: app
+    attributes:
+      label: App name and package name
+      placeholder: e.g. Catima (me.hackerchick.catima)
+    validations:
+      required: true
+  - type: dropdown
+    id: repository
+    attributes:
+      label: Repository
+      options:
+        - f-droid.org
+        - IzzyOnDroid
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: What goes wrong?
+      options:
+        - The app is not shown
+        - The app does not install
+        - The app does not update
+        - The wrong version is offered
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: What did you expect, and what happened? Error messages and screenshots help.
+    validations:
+      required: true
+  - type: input
+    id: watch
+    attributes:
+      label: Watch model and Wear OS version
+      placeholder: e.g. Google Pixel Watch 2, Wear OS 5
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: OpenWrist version or commit
+    validations:
+      required: true
+  - type: checkboxes
+    id: human
+    attributes:
+      label: AI policy
+      options:
+        - label: I wrote this report myself (translation is fine).
+          required: true
