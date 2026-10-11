@@ -1,11 +1,11 @@
 # Development setup
 
-How to get a machine ready to build OpenWrist. There is no Gradle project yet;
-this page will be completed together with the first module.
+How to get a machine ready to build OpenWrist.
 
 ## Tools
 
-- JDK 17 or newer
+- JDK 17 or newer to start Gradle. Gradle runs its daemon on JDK 25 and
+  downloads it if it is missing (`gradle/gradle-daemon-jvm.properties`).
 - Android Studio (current stable), with the Android SDK and a Wear OS
   emulator image
 - `adb` for installing builds on a real watch
@@ -19,6 +19,7 @@ test on a real watch.
 ## Everyday commands
 
 ```sh
+./gradlew build                # build everything
 ./gradlew ktlintCheck detekt   # lint
 ./gradlew test                 # unit tests
 ```
