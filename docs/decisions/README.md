@@ -16,3 +16,4 @@ behind it is forgotten.
 | [0003](0003-build-on-fdroid-libraries.md) | Build on the F-Droid libraries | proposed |
 | [0004](0004-translations-with-android-resources.md) | Translations with Android string resources | proposed |
 | [0005](0005-license-gpl-3.0.md) | License under GPL-3.0-or-later | accepted |
+| [0006](0006-application-id.md) | Application ID io.github.datend3nker.openwrist | accepted |

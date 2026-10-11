@@ -23,4 +23,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "OpenWrist"
+include(":app")
  

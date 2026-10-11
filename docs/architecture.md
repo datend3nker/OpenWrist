@@ -1,8 +1,8 @@
 # Architecture
 
-This document describes the planned structure. No module exists yet. Modules
-are created once there is code for them; until then the list below is a plan,
-not a commitment.
+This document describes the planned structure. Only `app` exists so far.
+Modules are created once there is code for them; until then the list below is
+a plan, not a commitment.
 
 ## Ground rules
 
@@ -30,7 +30,11 @@ All modules live in one Gradle project. Names are a proposal.
 |---|---|
 | `repo` | Repository index: download, parse, verify, local cache |
 | `install` | APK download, verification, installation, updates |
-| `app` | Wear OS user interface (Compose for Wear OS), navigation, translations |
+| `app` | Wear OS user interface (Compose for Wear OS), navigation, translations. Exists, shows a placeholder screen |
+
+The application ID and root package is `io.github.datend3nker.openwrist`, see
+[ADR 0006](decisions/0006-application-id.md). The app is standalone: it needs
+no companion app on the phone and no Google Play services.
 
 ## Open questions
 
