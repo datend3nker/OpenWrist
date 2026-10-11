@@ -4,8 +4,9 @@ How to get a machine ready to build OpenWrist.
 
 ## Tools
 
-- JDK 17 or newer to start Gradle. Gradle runs its daemon on JDK 25 and
+- JDK 17 or newer to start Gradle. Gradle runs its daemon on JDK 21 and
   downloads it if it is missing (`gradle/gradle-daemon-jvm.properties`).
+  Not newer, because detekt 1.23 fails on JDK 25.
 - Android Studio (current stable), with the Android SDK and a Wear OS
   emulator image
 - `adb` for installing builds on a real watch
@@ -24,5 +25,7 @@ test on a real watch.
 ./gradlew test                 # unit tests
 ```
 
-These tasks are planned. Run them before every commit once they exist, see
-[CONTRIBUTING.md](../CONTRIBUTING.md).
+Run them before every commit, see [CONTRIBUTING.md](../CONTRIBUTING.md).
+`./gradlew ktlintFormat` fixes most formatting problems on its own. Lint
+settings live in `.editorconfig` (ktlint) and `config/detekt/detekt.yml`
+(only the differences from the detekt defaults).

@@ -147,7 +147,7 @@ is adapted.
   - `./gradlew build` works on a fresh clone.
 - [x] **E4.2** Add the `app` module with an empty Compose for Wear OS screen · `feature` `app`
   - The app starts on the Wear OS emulator; the application ID is chosen.
-- [ ] **E4.3** Set up ktlint and detekt · `task`
+- [x] **E4.3** Set up ktlint and detekt · `task`
   - `./gradlew ktlintCheck detekt` runs and fails on violations.
 - [ ] **E4.4** Add CI workflow for lint, detekt and unit tests · `task` `ci`
   - Pull requests show a failing check on lint, detekt or test errors.

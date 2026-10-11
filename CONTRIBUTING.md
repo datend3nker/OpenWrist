@@ -104,7 +104,7 @@ makes clear that the install is still running.
 
 ## Code
 
-- `./gradlew ktlintCheck detekt` without warnings (set up with the first module).
+- `./gradlew ktlintCheck detekt` without warnings.
 - Every module has a package comment that describes its job in a few
   sentences.
 - Public types and functions have KDoc comments (`/** */`).

@@ -1,0 +1,11 @@
+# Only differences from the detekt defaults. Everything else stays default.
+
+naming:
+  FunctionNaming:
+    # Composable functions are named like types (PascalCase), as Compose recommends.
+    ignoreAnnotated: ['Composable']
+
+style:
+  UnusedPrivateMember:
+    # Previews are only called by Android Studio.
+    ignoreAnnotated: ['Preview', 'WearPreviewDevices', 'WearPreviewFontScales']

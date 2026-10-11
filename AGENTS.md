@@ -33,8 +33,8 @@ Every contribution is submitted by a human who is responsible for it (see the
   [CONTRIBUTING.md](CONTRIBUTING.md#commits). Three clear commits are better
   than one that mixes everything.
 - **Setup:** [docs/development.md](docs/development.md).
-- **Before committing:** `./gradlew ktlintCheck detekt test` (once the Gradle
-  project exists). Do not create a commit that does not build.
+- **Before committing:** `./gradlew ktlintCheck detekt test`. Do not create a
+  commit that does not build.
 - **Build only what the task asks for.** No modules, interfaces,
   configuration or features in advance.
 - **Docs in the same commit as the code.** If the architecture changes, update
