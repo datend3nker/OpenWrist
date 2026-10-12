@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">OpenWrist</string>
+    <!-- The name stays the same in every language. -->
+    <string name="app_name" translatable="false">OpenWrist</string>
     <string name="unofficial_client">Unofficial client for F-Droid repositories</string>
 </resources>

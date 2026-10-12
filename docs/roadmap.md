@@ -151,7 +151,7 @@ is adapted.
   - `./gradlew ktlintCheck detekt` runs and fails on violations.
 - [x] **E4.4** Add CI workflow for lint, detekt and unit tests · `task` `ci`
   - Pull requests show a failing check on lint, detekt or test errors.
-- [ ] **E4.5** Add string resources with a test translation · `task` `i18n`
+- [x] **E4.5** Add string resources with a test translation · `task` `i18n`
   - The placeholder text comes from `strings.xml`
     ([ADR 0004](decisions/0004-translations-with-android-resources.md)).
 
