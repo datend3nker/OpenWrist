@@ -14,7 +14,8 @@ the F-Droid libraries and only shows apps built for watches.
 > of its respective owners. Problems with OpenWrist go to this project, not to
 > F-Droid.
 
-> **Status:** planning. There is no code in this repository yet. A proof of
+> **Status:** early development. The app builds and shows a placeholder
+> screen on the watch; it cannot browse or install apps yet. A proof of
 > concept exists as a Wear OS module in a fork of the F-Droid client, see the
 > [roadmap](docs/roadmap.md).
 
