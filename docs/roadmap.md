@@ -149,7 +149,7 @@ is adapted.
   - The app starts on the Wear OS emulator; the application ID is chosen.
 - [x] **E4.3** Set up ktlint and detekt · `task`
   - `./gradlew ktlintCheck detekt` runs and fails on violations.
-- [ ] **E4.4** Add CI workflow for lint, detekt and unit tests · `task` `ci`
+- [x] **E4.4** Add CI workflow for lint, detekt and unit tests · `task` `ci`
   - Pull requests show a failing check on lint, detekt or test errors.
 - [ ] **E4.5** Add string resources with a test translation · `task` `i18n`
   - The placeholder text comes from `strings.xml`

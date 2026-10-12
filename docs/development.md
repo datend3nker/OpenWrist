@@ -31,6 +31,8 @@ test on a real watch.
 ```
 
 Run them before every commit, see [CONTRIBUTING.md](../CONTRIBUTING.md).
+CI runs the same checks on every pull request
+(`.github/workflows/ci.yml`).
 `./gradlew ktlintFormat` fixes most formatting problems on its own. Lint
 settings live in `.editorconfig` (ktlint) and `config/detekt/detekt.yml`
 (only the differences from the detekt defaults).
