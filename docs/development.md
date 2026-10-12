@@ -11,6 +11,11 @@ How to get a machine ready to build OpenWrist.
   emulator image
 - `adb` for installing builds on a real watch
 
+Gradle has to find the Android SDK. Android Studio writes its path to
+`local.properties` when it opens the project. On the command line, set
+`ANDROID_HOME` (for example `export ANDROID_HOME=~/Android/Sdk`) or create
+`local.properties` with `sdk.dir=/path/to/sdk`. The file is not committed.
+
 ## Wear OS devices
 
 Install and update behavior can differ between the emulator and real watches
