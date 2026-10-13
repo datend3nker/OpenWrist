@@ -120,7 +120,7 @@ or moves into this repository with the F-Droid libraries as dependencies.
 
 **Tickets:**
 
-- [ ] **E3.1** Check how the F-Droid libraries can be used outside the client · `research`
+- [x] **E3.1** Check how the F-Droid libraries can be used outside the client · `research`
   - It is clear whether they are published as artifacts or have to be
     vendored, and what that means for updates.
 - [ ] **E3.2** Decide where the code lives · `research` `docs`
