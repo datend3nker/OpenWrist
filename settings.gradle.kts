@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "OpenWrist"
 include(":app")
 include(":repo")
+include(":install")
