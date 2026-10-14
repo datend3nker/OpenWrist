@@ -215,7 +215,7 @@ is adapted.
 **Tickets:**
 
 - [x] **E7.1** Set up signed release builds · `task` `packaging`
-- [ ] **E7.2** Add German translation · `feature` `i18n`
+- [x] **E7.2** Add German translation · `feature` `i18n`
 - [ ] **E7.3** Add store metadata (description, screenshots) · `task` `packaging`
 - [ ] **E7.4** Submit OpenWrist to f-droid.org or IzzyOnDroid · `task` `packaging`
 - [ ] **E7.5** Prepare the repository for going public · `docs`
