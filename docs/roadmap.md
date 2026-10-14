@@ -154,7 +154,7 @@ is adapted.
 - [x] **E4.5** Add string resources with a test translation · `task` `i18n`
   - The placeholder text comes from `strings.xml`
     ([ADR 0004](decisions/0004-translations-with-android-resources.md)).
-- [ ] **E4.6** Keep dependencies up to date with Dependabot · `task` `ci`
+- [x] **E4.6** Keep dependencies up to date with Dependabot · `task` `ci`
   - Dependabot opens pull requests for new versions in
     `gradle/libs.versions.toml`, the Gradle wrapper and the GitHub Actions
     in `.github/workflows/`.
