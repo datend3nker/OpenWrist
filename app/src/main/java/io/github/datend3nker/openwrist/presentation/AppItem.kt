@@ -4,12 +4,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.core.os.LocaleListCompat
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.Text
 import org.fdroid.database.AppListItem
 
-/** One app in a list: name and summary. Used by the app list and the search. */
+/** One app in a list: icon, name and summary. Used by the app list and the search. */
 @Composable
 fun AppItem(
     app: AppListItem,
@@ -20,6 +21,7 @@ fun AppItem(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
         colors = ButtonDefaults.filledTonalButtonColors(),
+        icon = { AppIcon(app.repoId, app.getIcon(LocaleListCompat.getDefault()), ButtonDefaults.LargeIconSize) },
         label = { Text(app.name ?: app.packageName, maxLines = 2, overflow = TextOverflow.Ellipsis) },
         secondaryLabel = {
             val summary = app.summary

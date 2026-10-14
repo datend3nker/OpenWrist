@@ -4,6 +4,7 @@ import android.content.Context
 import io.github.datend3nker.openwrist.install.ApkInstaller
 import io.github.datend3nker.openwrist.install.ApkVerifier
 import io.github.datend3nker.openwrist.install.InstallManager
+import io.github.datend3nker.openwrist.repo.AppIcons
 import io.github.datend3nker.openwrist.repo.DefaultRepositories
 import io.github.datend3nker.openwrist.repo.RepoDownloaderFactory
 import io.github.datend3nker.openwrist.repo.RepoRefresher
@@ -16,6 +17,7 @@ import org.fdroid.database.FDroidDatabase
 import org.fdroid.database.FDroidDatabaseHolder
 import org.fdroid.download.HttpManager
 import org.fdroid.index.RepoUpdater
+import java.io.File
 
 /**
  * Creates the objects that live as long as the app and wires them together.
@@ -54,6 +56,8 @@ class AppContainer(
     }
 
     val watchApps: WatchApps by lazy { WatchApps(db, appContext.packageManager, compatibilityChecker) }
+
+    val appIcons: AppIcons by lazy { AppIcons(db, downloaderFactory, File(appContext.cacheDir, "icons")) }
 
     val apkInstaller = ApkInstaller(appContext)
 

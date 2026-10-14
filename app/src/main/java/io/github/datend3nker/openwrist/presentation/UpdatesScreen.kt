@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
@@ -51,6 +52,13 @@ fun UpdatesScreen(onAppClick: (packageName: String) -> Unit) {
                             onClick = { onAppClick(app.packageName) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.filledTonalButtonColors(),
+                            icon = {
+                                AppIcon(
+                                    app.repoId,
+                                    app.getIcon(LocaleListCompat.getDefault()),
+                                    ButtonDefaults.LargeIconSize,
+                                )
+                            },
                             label = {
                                 Text(app.name ?: app.packageName, maxLines = 2, overflow = TextOverflow.Ellipsis)
                             },

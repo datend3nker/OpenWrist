@@ -241,7 +241,7 @@ is adapted.
 
 `epic` · `feature` · `app`
 
-- [ ] **E9.1** Show app icons in the list and details · `feature` `app`
+- [x] **E9.1** Show app icons in the list and details · `feature` `app`
 
 ### E10: Background updates
 

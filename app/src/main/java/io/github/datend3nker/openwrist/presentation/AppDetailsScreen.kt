@@ -50,6 +50,7 @@ fun AppDetailsScreen(packageName: String) {
                     item { CenteredText(stringResource(R.string.details_not_found)) }
                 is DetailsState.Loaded -> {
                     val details = current.details
+                    item { AppIcon(details.repoId, details.icon, DetailsIconSize) }
                     item { ListHeader { Text(details.name, textAlign = TextAlign.Center) } }
                     details.summary?.let { item { CenteredText(it) } }
                     item { VersionText(details) }
@@ -71,6 +72,8 @@ fun AppDetailsScreen(packageName: String) {
         }
     }
 }
+
+private val DetailsIconSize = 48.dp
 
 /** Install or update, the permission hint if needed, and opening the installed app. */
 @Composable

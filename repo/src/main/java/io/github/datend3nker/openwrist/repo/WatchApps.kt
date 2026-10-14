@@ -15,11 +15,16 @@ import org.fdroid.database.DbUpdateChecker
 import org.fdroid.database.FDroidDatabase
 import org.fdroid.database.Repository
 import org.fdroid.database.UpdatableApp
+import org.fdroid.index.v2.FileV2
 
 /** Everything the details screen shows about one app. */
 data class AppDetails(
     val packageName: String,
+    /** The repository the metadata and [icon] come from. */
+    val repoId: Long,
     val name: String,
+    /** Load it with [AppIcons]. */
+    val icon: FileV2?,
     val summary: String?,
     /** Formatted as HTML, as in the index. */
     val description: String?,
@@ -88,7 +93,9 @@ class WatchApps(
             val suggestedVersion = suggestedVersion(packageName, app.metadata.preferredSigner)
             AppDetails(
                 packageName = packageName,
+                repoId = app.repoId,
                 name = app.name ?: packageName,
+                icon = app.getIcon(LocaleListCompat.getDefault()),
                 summary = app.summary,
                 description = app.getDescription(LocaleListCompat.getDefault()),
                 authorName = app.authorName,
