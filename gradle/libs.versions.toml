@@ -6,8 +6,13 @@ wearCompose = "1.7.1"
 wearToolingPreview = "1.0.0"
 activityCompose = "1.13.0"
 coreSplashscreen = "1.2.0"
+coreKtx = "1.19.1"
 ktlint = "14.2.0"
 detekt = "1.23.8"
+fdroid = "0.2.0"
+lifecycle = "2.11.0"
+junit = "4.13.2"
+mockk = "1.14.11"
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -20,10 +25,18 @@ wear-compose-foundation = { group = "androidx.wear.compose", name = "compose-fou
 wear-compose-ui-tooling = { group = "androidx.wear.compose", name = "compose-ui-tooling", version.ref = "wearCompose" }
 wear-tooling-preview = { group = "androidx.wear", name = "wear-tooling-preview", version.ref = "wearToolingPreview" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
+lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
+fdroid-index = { group = "org.fdroid", name = "index", version.ref = "fdroid" }
+fdroid-download = { group = "org.fdroid", name = "download", version.ref = "fdroid" }
+fdroid-database = { group = "org.fdroid", name = "database", version.ref = "fdroid" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
