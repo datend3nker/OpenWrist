@@ -1,7 +1,7 @@
 # 0003: Build on the F-Droid libraries
 
-- **Status:** proposed
-- **Date:** 2026-10-09
+- **Status:** accepted
+- **Date:** 2026-10-09, accepted 2026-10-14
 
 ## Context
 
@@ -59,21 +59,33 @@ Reuse the F-Droid libraries for index handling, verification and download,
 and write only the Wear OS specific parts ourselves: the watch UI and a
 compatibility checker that accepts watch builds only.
 
-Still open: whether the code stays a module in the F-Droid client fork (the
-libraries are then used as they are) or moves into this repository (the
-libraries then come as dependencies, if they are published for that). This
-ADR stays `proposed` until that is decided.
+The code lives in this repository, not in the F-Droid client fork (E3.2).
+The libraries come as normal dependencies from Maven Central, with the
+versions in `gradle/libs.versions.toml`. Dependabot proposes new versions.
+
+If OpenWrist needs a fix that is not released yet, we first ask the F-Droid
+project for a release. Only if that takes too long, we build the libraries
+from a pinned commit of the F-Droid client for a while (Git submodule and
+Gradle composite build). That route was not tried yet.
 
 ## Alternatives
 
 - **Own implementation of the index format:** full control, but a lot of work
   and a new source of security bugs.
 - **Fork the F-Droid client:** inherits a large phone-oriented UI and code
-  base that is hard to follow.
+  base that is hard to follow. The proof of concept took this route.
+- **Git submodule of the F-Droid client, built from source:** always the
+  newest code, but every clone needs the whole client repository, our build
+  has to match its Gradle and Kotlin setup, and a submodule is pinned to a
+  commit too, so it is not more up to date without manual updates.
+- **Copy the library code into this repository:** we would maintain
+  security-sensitive code that is not ours.
 
 ## Consequences
 
 - Less code to write and audit, and compatibility with existing repositories.
-- OpenWrist depends on the F-Droid libraries' API and release cycle.
+- OpenWrist depends on the F-Droid libraries' API and release cycle. The
+  libraries are at `0.x`, so updates may need code changes, and fixes on
+  `master` reach OpenWrist only with the next release.
 - The license of each library must be compatible with
   [ADR 0005](0005-license-gpl-3.0.md).

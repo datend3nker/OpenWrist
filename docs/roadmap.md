@@ -123,7 +123,7 @@ or moves into this repository with the F-Droid libraries as dependencies.
 - [x] **E3.1** Check how the F-Droid libraries can be used outside the client · `research`
   - It is clear whether they are published as artifacts or have to be
     vendored, and what that means for updates.
-- [ ] **E3.2** Decide where the code lives · `research` `docs`
+- [x] **E3.2** Decide where the code lives · `research` `docs`
   - ADR 0003 is accepted or superseded.
 - [ ] **E3.3** Confirm or revise Kotlin and Compose for Wear OS · `research` `docs`
   - ADR 0002 is accepted or superseded.

@@ -38,8 +38,6 @@ no companion app on the phone and no Google Play services.
 
 ## Open questions
 
-- Where the code lives: a module in the F-Droid client fork or this
-  repository, see [ADR 0003](decisions/0003-build-on-fdroid-libraries.md).
 - Installs go through `PackageInstaller` sessions with
   `REQUEST_INSTALL_PACKAGES` and show the system confirmation dialog. How this
   behaves on real watches is not verified yet.
