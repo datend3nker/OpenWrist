@@ -236,7 +236,7 @@ is adapted.
 
 `epic` · `feature` · `repo`
 
-- [ ] **E8.1** Show and enable or disable repositories · `feature` `repo` `app`
+- [x] **E8.1** Show and enable or disable repositories · `feature` `repo` `app`
 - [ ] **E8.2** Add a repository by URL and fingerprint · `feature` `repo` `app`
   - Typing on a watch is hard; consider other ways, such as a QR code.
 

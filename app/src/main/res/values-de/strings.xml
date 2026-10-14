@@ -47,4 +47,5 @@
         <item quantity="one">%d App-Update verfügbar</item>
         <item quantity="other">%d App-Updates verfügbar</item>
     </plurals>
+    <string name="repositories">Repositorys</string>
 </resources>

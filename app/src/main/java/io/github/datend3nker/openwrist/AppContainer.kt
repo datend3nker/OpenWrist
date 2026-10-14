@@ -16,6 +16,7 @@ import kotlinx.coroutines.SupervisorJob
 import org.fdroid.database.FDroidDatabase
 import org.fdroid.database.FDroidDatabaseHolder
 import org.fdroid.download.HttpManager
+import org.fdroid.index.RepoManager
 import org.fdroid.index.RepoUpdater
 import java.io.File
 
@@ -53,6 +54,20 @@ class AppContainer(
                 listener = listener,
             )
         }
+    }
+
+    /**
+     * Enables, disables and adds repositories. It stores the index of a new
+     * repository itself, so it needs the same compatibility checker.
+     */
+    val repoManager: RepoManager by lazy {
+        RepoManager(
+            context = appContext,
+            db = db,
+            downloaderFactory = downloaderFactory,
+            httpManager = httpManager,
+            compatibilityChecker = compatibilityChecker,
+        )
     }
 
     val watchApps: WatchApps by lazy { WatchApps(db, appContext.packageManager, compatibilityChecker) }

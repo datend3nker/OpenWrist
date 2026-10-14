@@ -26,6 +26,7 @@ fun AppListScreen(
     onAppClick: (packageName: String) -> Unit,
     onSearchClick: () -> Unit,
     onUpdatesClick: () -> Unit,
+    onRepositoriesClick: () -> Unit,
 ) {
     val viewModel =
         containerViewModel { AppListViewModel(it.watchApps, it.repoRefresher, it.appScope) }
@@ -52,6 +53,14 @@ fun AppListScreen(
                 )
             }
             item { RefreshButton(refreshState, onRefresh = viewModel::refresh) }
+            item {
+                Button(
+                    onClick = onRepositoriesClick,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.filledTonalButtonColors(),
+                    label = { Text(stringResource(R.string.repositories)) },
+                )
+            }
             val list = apps
             if (list != null && list.isEmpty() && refreshState !is RefreshState.Running) {
                 item {

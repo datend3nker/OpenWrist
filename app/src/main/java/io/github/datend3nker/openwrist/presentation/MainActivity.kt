@@ -62,6 +62,8 @@ sealed interface Screen {
 
     data object Updates : Screen
 
+    data object Repositories : Screen
+
     data class AppDetails(
         val packageName: String,
     ) : Screen
@@ -91,6 +93,7 @@ fun WearApp(openUpdates: Boolean = false) {
                                 onAppClick = { backStack.add(Screen.AppDetails(it)) },
                                 onSearchClick = { backStack.add(Screen.Search) },
                                 onUpdatesClick = { backStack.add(Screen.Updates) },
+                                onRepositoriesClick = { backStack.add(Screen.Repositories) },
                             )
                         }
                         entry<Screen.Search> {
@@ -99,6 +102,7 @@ fun WearApp(openUpdates: Boolean = false) {
                         entry<Screen.Updates> {
                             UpdatesScreen(onAppClick = { backStack.add(Screen.AppDetails(it)) })
                         }
+                        entry<Screen.Repositories> { RepositoriesScreen() }
                         entry<Screen.AppDetails> { AppDetailsScreen(it.packageName) }
                     },
             )

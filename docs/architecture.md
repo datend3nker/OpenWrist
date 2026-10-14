@@ -47,6 +47,14 @@ All modules live in one Gradle project.
 4. `WatchApps` lists only apps with at least one compatible version. The
    version it suggests is the newest compatible one.
 
+### How repositories are managed
+
+The Repositories screen lists every repository with a switch. Enabling and
+disabling goes through the F-Droid library's `RepoManager`, created in
+`AppContainer` with `WatchCompatibilityChecker`. Apps of disabled
+repositories are not listed. Enabling a repository refreshes the indexes
+right away, as it may have none yet.
+
 ### How an app is installed
 
 1. The details screen shows the version `WatchApps` suggests. For a new
