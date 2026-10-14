@@ -80,3 +80,19 @@ keytool -genkeypair -keystore openwrist-release.jks -alias openwrist \
 The release build leaves out the dependency metadata block that the Android
 Gradle plugin adds for Google Play. It is encrypted with a Google key, and
 F-Droid compatible repositories reject APKs that contain it.
+
+## Store metadata
+
+Title, descriptions, icon and screenshots for F-Droid compatible
+repositories live in `fastlane/metadata/android/<locale>/`, the layout that
+f-droid.org and IzzyOnDroid read. English (`en-US`) and German (`de-DE`)
+exist; images are shared from `en-US`.
+
+- `short_description.txt` must stay below 80 characters.
+- `images/icon.png` is a 512 × 512 rendering of the launcher icon
+  (`app/src/main/res/drawable/ic_launcher_foreground.xml` on a round
+  background). Render it again when the icon changes.
+- The screenshots are taken on the Wear OS emulator with
+  `adb exec-out screencap -p > 1.png`. They are in `phoneScreenshots`
+  because that is the folder phone clients show. Assumption: whether the
+  repositories would also show a `wearScreenshots` folder was not checked.

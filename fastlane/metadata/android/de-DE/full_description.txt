@@ -1,0 +1,13 @@
+<p>Mit OpenWrist findest, installierst und aktualisierst du freie Apps direkt auf deiner Wear-OS-Uhr, ohne Google Play und ohne Begleit-App auf dem Handy.</p>
+
+<p><b>Nicht mit F-Droid verbunden.</b> OpenWrist ist ein unabhängiger Client eines Drittanbieters. Es liest die öffentlichen Repositorys von F-Droid und nutzt die quelloffenen F-Droid-Bibliotheken, wird aber nicht vom F-Droid-Projekt entwickelt, empfohlen oder unterstützt.</p>
+
+<p>Funktionen:</p>
+<ul>
+<li>Zeigt nur Builds, die für Uhren gemacht sind. Handy-Builds derselben App werden ausgelassen.</li>
+<li>Apps per Tastatur oder Sprache suchen.</li>
+<li>Apps installieren und aktualisieren. Vor jeder Installation werden die Signatur des Index sowie Prüfsumme und Signaturzertifikat jeder APK geprüft.</li>
+<li>Android fragt vor jeder Installation nach einer Bestätigung.</li>
+</ul>
+
+<p>OpenWrist nutzt derzeit nur das Repository von f-droid.org. Es ist in früher Entwicklung und wurde bisher nur im Wear-OS-Emulator getestet.</p>
