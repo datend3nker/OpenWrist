@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
@@ -31,13 +34,12 @@ import io.github.datend3nker.openwrist.R
 fun SearchScreen(onAppClick: (packageName: String) -> Unit) {
     val viewModel = containerViewModel { SearchViewModel(it.watchApps) }
     val results by viewModel.results.collectAsStateWithLifecycle(initialValue = null)
-    val query by viewModel.query.collectAsStateWithLifecycle()
     val listState = rememberTransformingLazyColumnState()
 
     ScreenScaffold(scrollState = listState) { contentPadding ->
         TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
             item { ListHeader { Text(stringResource(R.string.search)) } }
-            item { SearchField(query, onQueryChange = viewModel::search) }
+            item { SearchField(onQueryChange = viewModel::search) }
             val list = results
             if (list != null && list.isEmpty()) {
                 item {
@@ -60,28 +62,31 @@ fun SearchScreen(onAppClick: (packageName: String) -> Unit) {
  * keyboard; its search key closes it again so the results can be seen.
  */
 @Composable
-private fun SearchField(
-    query: String,
-    onQueryChange: (String) -> Unit,
-) {
+private fun SearchField(onQueryChange: (String) -> Unit) {
+    // The field owns its text. Passing it through the view model's flow and
+    // back would let the field fall behind the keyboard while typing, and
+    // the keyboard then inserts text twice.
+    val textState = rememberTextFieldState()
+    LaunchedEffect(textState) {
+        snapshotFlow { textState.text.toString() }.collect(onQueryChange)
+    }
     val focusManager = LocalFocusManager.current
     val colors = MaterialTheme.colorScheme
     BasicTextField(
-        value = query,
-        onValueChange = onQueryChange,
+        state = textState,
         modifier = Modifier.fillMaxWidth(),
-        singleLine = true,
+        lineLimits = TextFieldLineLimits.SingleLine,
         textStyle = MaterialTheme.typography.bodyLarge.copy(color = colors.onSurface),
         cursorBrush = SolidColor(colors.primary),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        keyboardActions = KeyboardActions(onSearch = { focusManager.clearFocus() }),
-        decorationBox = { innerTextField ->
+        onKeyboardAction = { focusManager.clearFocus() },
+        decorator = { innerTextField ->
             Box(
                 Modifier
                     .background(colors.surfaceContainer, CircleShape)
                     .padding(horizontal = 16.dp, vertical = 12.dp),
             ) {
-                if (query.isEmpty()) {
+                if (textState.text.isEmpty()) {
                     Text(stringResource(R.string.search_hint), color = colors.onSurfaceVariant)
                 }
                 innerTextField()

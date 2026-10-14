@@ -6,8 +6,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
@@ -19,9 +17,6 @@ class SearchViewModel(
     private val watchApps: WatchApps,
 ) : ViewModel() {
     private val mutableQuery = MutableStateFlow("")
-
-    /** The text in the search field, as typed. */
-    val query: StateFlow<String> = mutableQuery.asStateFlow()
 
     /**
      * Watch apps matching the typed text, or null while it is empty. The
@@ -37,6 +32,7 @@ class SearchViewModel(
                 if (query.isEmpty()) flowOf(null) else watchApps.search(query)
             }
 
+    /** Call with the text of the search field whenever it changes. */
     fun search(text: String) {
         mutableQuery.value = text
     }
