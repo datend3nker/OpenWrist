@@ -66,6 +66,10 @@ sealed interface Screen {
 
     data object AddRepository : Screen
 
+    data class RepositoryDetails(
+        val repoId: Long,
+    ) : Screen
+
     data class AppDetails(
         val packageName: String,
     ) : Screen
@@ -105,7 +109,13 @@ fun WearApp(openUpdates: Boolean = false) {
                             UpdatesScreen(onAppClick = { backStack.add(Screen.AppDetails(it)) })
                         }
                         entry<Screen.Repositories> {
-                            RepositoriesScreen(onAddClick = { backStack.add(Screen.AddRepository) })
+                            RepositoriesScreen(
+                                onRepositoryClick = { backStack.add(Screen.RepositoryDetails(it)) },
+                                onAddClick = { backStack.add(Screen.AddRepository) },
+                            )
+                        }
+                        entry<Screen.RepositoryDetails> {
+                            RepositoryDetailsScreen(it.repoId, onRemoved = { backStack.removeLastOrNull() })
                         }
                         entry<Screen.AddRepository> {
                             AddRepositoryScreen(onAdded = { backStack.removeLastOrNull() })

@@ -241,7 +241,7 @@ is adapted.
   - Typing on a watch is hard; consider other ways, such as a QR code.
 - [ ] **E8.3** Add a repository without typing its address · `feature` `app`
   - For example from a QR code or a link sent from the phone.
-- [ ] **E8.4** Remove a repository that the user added · `feature` `app`
+- [x] **E8.4** Remove a repository that the user added · `feature` `app`
 
 ### E9: App icons
 

@@ -76,4 +76,9 @@
     <string name="add_repository_error_archive">This is an archive. Add the main repository instead.</string>
     <string name="add_repository_error_index">No valid repository found at this address.</string>
     <string name="add_repository_error_io">Could not load the repository. Check the address and the connection.</string>
+    <string name="repository_remove">Remove repository</string>
+    <!-- %1$s is the name of the repository. -->
+    <string name="repository_remove_title">Remove %1$s?</string>
+    <string name="repository_remove_text">Apps installed from it stay on the watch, but OpenWrist no longer offers updates for them from this repository.</string>
+    <string name="repository_cannot_remove">This repository comes with OpenWrist. It can be disabled, but not removed.</string>
 </resources>

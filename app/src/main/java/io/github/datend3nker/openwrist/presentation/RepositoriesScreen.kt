@@ -15,13 +15,19 @@ import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ListHeader
 import androidx.wear.compose.material3.ScreenScaffold
-import androidx.wear.compose.material3.SwitchButton
+import androidx.wear.compose.material3.SplitSwitchButton
 import androidx.wear.compose.material3.Text
 import io.github.datend3nker.openwrist.R
 
-/** The repositories OpenWrist knows, each with a switch to enable or disable it. */
+/**
+ * The repositories OpenWrist knows, each with a switch to enable or disable
+ * it. Tapping the name opens the repository's details.
+ */
 @Composable
-fun RepositoriesScreen(onAddClick: () -> Unit) {
+fun RepositoriesScreen(
+    onRepositoryClick: (repoId: Long) -> Unit,
+    onAddClick: () -> Unit,
+) {
     val viewModel = containerViewModel { RepositoriesViewModel(it.repoManager, it.repoRefresher, it.appScope) }
     val repositories by viewModel.repositories.collectAsStateWithLifecycle()
     val listState = rememberTransformingLazyColumnState()
@@ -30,13 +36,16 @@ fun RepositoriesScreen(onAddClick: () -> Unit) {
         TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
             item { ListHeader { Text(stringResource(R.string.repositories)) } }
             items(repositories, key = { it.repoId }) { repository ->
-                SwitchButton(
+                val name = repository.getName(LocaleListCompat.getDefault()) ?: repository.address
+                SplitSwitchButton(
                     checked = repository.enabled,
                     onCheckedChange = { viewModel.setEnabled(repository, it) },
+                    toggleContentDescription = name,
+                    onContainerClick = { onRepositoryClick(repository.repoId) },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
                         Text(
-                            repository.getName(LocaleListCompat.getDefault()) ?: repository.address,
+                            name,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
                         )

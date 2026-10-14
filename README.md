@@ -38,7 +38,7 @@ the F-Droid libraries and only shows apps built for watches.
 | Uninstall apps | works on the emulator |
 | Notify about updates once a day | works on the emulator |
 | Verify index and APK signatures | works on the emulator |
-| Add and manage repositories | works on the emulator; removing is planned |
+| Add and manage repositories | works on the emulator |
 
 ## Publishing your watch app for OpenWrist
 

@@ -120,7 +120,7 @@ private fun TransformingLazyColumnScope.preview(
 }
 
 /** Small groups of characters, so the user can compare the fingerprint piece by piece. */
-private fun formatFingerprint(fingerprint: String): String {
+fun formatFingerprint(fingerprint: String): String {
     val groups = fingerprint.uppercase().chunked(FINGERPRINT_GROUP_SIZE)
     return groups.joinToString(" ")
 }

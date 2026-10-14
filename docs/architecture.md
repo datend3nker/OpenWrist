@@ -63,6 +63,12 @@ the repository stored, together with its apps. If the address carries a
 Without it, the key of the first download is trusted from then on, so the
 preview asks the user to compare the fingerprint.
 
+Tapping a repository's name opens its details. Repositories the user added
+can be removed there after confirming; `RepoManager` deletes them with their
+apps. Installed apps stay installed but get no updates from that repository
+any more. The repositories OpenWrist comes with (`DefaultRepositories`) can
+only be disabled.
+
 ### How an app is installed
 
 1. The details screen shows the version `WatchApps` suggests. For a new

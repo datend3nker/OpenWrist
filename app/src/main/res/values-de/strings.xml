@@ -64,4 +64,8 @@
     <string name="add_repository_error_archive">Das ist ein Archiv. Füge stattdessen das Haupt-Repository hinzu.</string>
     <string name="add_repository_error_index">Unter dieser Adresse wurde kein gültiges Repository gefunden.</string>
     <string name="add_repository_error_io">Das Repository konnte nicht geladen werden. Prüfe Adresse und Verbindung.</string>
+    <string name="repository_remove">Repository entfernen</string>
+    <string name="repository_remove_title">%1$s entfernen?</string>
+    <string name="repository_remove_text">Daraus installierte Apps bleiben auf der Uhr, aber OpenWrist bietet für sie aus diesem Repository keine Updates mehr an.</string>
+    <string name="repository_cannot_remove">Dieses Repository gehört zu OpenWrist. Es kann abgeschaltet, aber nicht entfernt werden.</string>
 </resources>
