@@ -21,8 +21,14 @@ class DefaultRepositories : FDroidFixture {
         }
     }
 
-    private companion object {
-        const val FDROID_CERTIFICATE =
+    companion object {
+        /**
+         * True for the repositories OpenWrist comes with. They can be
+         * disabled but not removed, so the app always has a known source.
+         */
+        fun isDefault(address: String): Boolean = REPOSITORIES.any { it.address == address }
+
+        private const val FDROID_CERTIFICATE =
             "3082035e30820246a00302010202044c49cd00300d06092a864886f70d01010505003071310b3009" +
                 "06035504061302554b3110300e06035504081307556e6b6e6f776e3111300f060355040713085765" +
                 "7468657262793110300e060355040a1307556e6b6e6f776e3110300e060355040b1307556e6b6e6f" +
@@ -45,7 +51,7 @@ class DefaultRepositories : FDroidFixture {
                 "dacfa4aa45038809ece0c5978653d6c85f678e7f5a2156d1bedd8117751e64a4b0dcd140f3040b02" +
                 "1821a8d93aed8d01ba36db6c82372211fed714d9a32607038cdfd565bd529ffc637212aaa2c224ef" +
                 "22b603eccefb5bf1e085c191d4b24fe742b17ab3f55d4e6f05ef"
-        val REPOSITORIES =
+        private val REPOSITORIES =
             listOf(
                 InitialRepository(
                     name = "F-Droid",

@@ -7,6 +7,8 @@ import org.fdroid.database.FDroidDatabase
 import org.fdroid.database.InitialRepository
 import org.fdroid.database.RepositoryDao
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.security.MessageDigest
 
@@ -51,5 +53,12 @@ class DefaultRepositoriesTest {
     private companion object {
         /** From https://f-droid.org/docs/Release_Channels_and_Signing_Keys/ */
         const val FDROID_FINGERPRINT = "43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB"
+    }
+
+    @Test
+    fun `only f-droid org and its archive are default repositories`() {
+        assertTrue(DefaultRepositories.isDefault("https://f-droid.org/repo"))
+        assertTrue(DefaultRepositories.isDefault("https://f-droid.org/archive"))
+        assertFalse(DefaultRepositories.isDefault("https://apt.izzysoft.de/fdroid/repo"))
     }
 }
