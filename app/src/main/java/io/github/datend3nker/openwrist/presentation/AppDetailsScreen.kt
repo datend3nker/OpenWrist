@@ -1,27 +1,45 @@
 package io.github.datend3nker.openwrist.presentation
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.CircularProgressIndicator
 import androidx.wear.compose.material3.ListHeader
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.Text
 import io.github.datend3nker.openwrist.R
+import io.github.datend3nker.openwrist.install.InstallState
 import io.github.datend3nker.openwrist.repo.AppDetails
 
 @Composable
 fun AppDetailsScreen(packageName: String) {
-    val viewModel = containerViewModel(key = packageName) { AppDetailsViewModel(it.watchApps, packageName) }
+    val context = LocalContext.current
+    val viewModel =
+        containerViewModel(key = packageName) {
+            AppDetailsViewModel(it.watchApps, it.installManager, it.apkInstaller, context.packageManager, packageName)
+        }
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val installState by viewModel.installState.collectAsStateWithLifecycle()
+    val canInstall by viewModel.canInstall.collectAsStateWithLifecycle()
+    LifecycleResumeEffect(Unit) {
+        viewModel.checkCanInstall()
+        onPauseOrDispose {}
+    }
     val listState = rememberTransformingLazyColumnState()
 
     ScreenScaffold(scrollState = listState) { contentPadding ->
@@ -35,6 +53,7 @@ fun AppDetailsScreen(packageName: String) {
                     item { ListHeader { Text(details.name, textAlign = TextAlign.Center) } }
                     details.summary?.let { item { CenteredText(it) } }
                     item { VersionText(details) }
+                    item { DetailsActions(details, viewModel, installState, canInstall) }
                     details.authorName?.let { item { CenteredText(stringResource(R.string.details_author, it)) } }
                     details.license?.let { item { CenteredText(stringResource(R.string.details_license, it)) } }
                     details.description?.let { html ->
@@ -49,6 +68,43 @@ fun AppDetailsScreen(packageName: String) {
                     item { CenteredText(details.packageName, small = true) }
                 }
             }
+        }
+    }
+}
+
+/** Install or update, the permission hint if needed, and opening the installed app. */
+@Composable
+private fun DetailsActions(
+    details: AppDetails,
+    viewModel: AppDetailsViewModel,
+    installState: InstallState?,
+    canInstall: Boolean,
+) {
+    val context = LocalContext.current
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        if (details.suggestedVersion != null) {
+            if (canInstall) {
+                InstallButton(
+                    state = installState,
+                    isUpdate = details.installedVersionName != null,
+                    onInstall = viewModel::install,
+                    onRetry = {
+                        viewModel.clearInstallState()
+                        viewModel.install()
+                    },
+                )
+            } else {
+                InstallPermissionHint()
+            }
+        }
+        val launchIntent = if (details.installedVersionName != null) viewModel.launchIntent() else null
+        if (launchIntent != null) {
+            Button(
+                onClick = { context.startActivity(launchIntent) },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.filledTonalButtonColors(),
+                label = { Text(stringResource(R.string.open)) },
+            )
         }
     }
 }

@@ -39,6 +39,7 @@ android {
 
 dependencies {
     implementation(project(":repo"))
+    implementation(project(":install"))
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.lifecycle.runtime.compose)

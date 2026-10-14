@@ -195,13 +195,13 @@ is adapted.
 
 **Tickets:**
 
-- [ ] **E6.1** Verify the index signature · `feature` `repo`
-- [ ] **E6.2** Download APKs and verify checksum and signature · `feature` `install`
-- [ ] **E6.3** Install through `PackageInstaller` with the system confirmation · `feature` `install`
-- [ ] **E6.4** Guide users through the install permission · `feature` `app`
+- [x] **E6.1** Verify the index signature · `feature` `repo`
+- [x] **E6.2** Download APKs and verify checksum and signature · `feature` `install`
+- [x] **E6.3** Install through `PackageInstaller` with the system confirmation · `feature` `install`
+- [x] **E6.4** Guide users through the install permission · `feature` `app`
   - Based on the results of E1.
-- [ ] **E6.5** Detect and install updates · `feature` `install`
-- [ ] **E6.6** Test that tampered APKs and indexes are rejected · `test` `install`
+- [x] **E6.5** Detect and install updates · `feature` `install`
+- [x] **E6.6** Test that tampered APKs and indexes are rejected · `test` `install`
 
 ### E7: First release
 

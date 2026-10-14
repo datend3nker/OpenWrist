@@ -1,6 +1,9 @@
 package io.github.datend3nker.openwrist
 
 import android.content.Context
+import io.github.datend3nker.openwrist.install.ApkInstaller
+import io.github.datend3nker.openwrist.install.ApkVerifier
+import io.github.datend3nker.openwrist.install.InstallManager
 import io.github.datend3nker.openwrist.repo.DefaultRepositories
 import io.github.datend3nker.openwrist.repo.RepoDownloaderFactory
 import io.github.datend3nker.openwrist.repo.RepoRefresher
@@ -51,4 +54,16 @@ class AppContainer(
     }
 
     val watchApps: WatchApps by lazy { WatchApps(db, appContext.packageManager, compatibilityChecker) }
+
+    val apkInstaller = ApkInstaller(appContext)
+
+    val installManager: InstallManager by lazy {
+        InstallManager(
+            context = appContext,
+            scope = appScope,
+            downloaderFactory = downloaderFactory,
+            verifier = ApkVerifier(appContext.packageManager),
+            installer = apkInstaller,
+        )
+    }
 }

@@ -23,4 +23,29 @@
     <!-- %1$s is the installed version, %2$s the new one. -->
     <string name="details_update_available">Update: %1$s → %2$s</string>
     <string name="details_no_compatible_version">No version for this watch</string>
+
+    <!-- Installing -->
+    <string name="install">Install</string>
+    <string name="install_update">Update</string>
+    <string name="open">Open</string>
+    <string name="install_downloading">Downloading…</string>
+    <string name="install_verifying">Verifying…</string>
+    <string name="install_installing">Installing…</string>
+    <string name="install_retry">Try again</string>
+    <string name="install_error_download">Download failed</string>
+    <string name="install_error_verification">The download does not match the repository, so it was not installed.</string>
+    <string name="install_error_installer">The system installer could not be started.</string>
+    <string name="install_error_conflict">Conflicts with the installed app, which may be signed with another key.</string>
+    <string name="install_error_storage">Not enough storage</string>
+    <string name="install_error_incompatible">This watch does not support the app.</string>
+    <!-- %1$d is the status code of Android's package installer. -->
+    <string name="install_error_status">Installation failed (status %1$d)</string>
+    <string name="install_permission_needed">Allow installing apps</string>
+    <string name="install_permission_open_settings">Opens the settings</string>
+    <!-- %1$s is an adb command, keep it unchanged. -->
+    <string name="install_permission_adb">This watch has no setting for it. Allow it from a computer with: %1$s</string>
+
+    <!-- Updates -->
+    <string name="updates">Updates</string>
+    <string name="updates_none">All apps are up to date.</string>
 </resources>

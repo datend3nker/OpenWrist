@@ -17,4 +17,25 @@
     <string name="details_installed">Installiert: %1$s</string>
     <string name="details_update_available">Update: %1$s → %2$s</string>
     <string name="details_no_compatible_version">Keine Version für diese Uhr</string>
+
+    <string name="install">Installieren</string>
+    <string name="install_update">Aktualisieren</string>
+    <string name="open">Öffnen</string>
+    <string name="install_downloading">Wird heruntergeladen…</string>
+    <string name="install_verifying">Wird geprüft…</string>
+    <string name="install_installing">Wird installiert…</string>
+    <string name="install_retry">Erneut versuchen</string>
+    <string name="install_error_download">Download fehlgeschlagen</string>
+    <string name="install_error_verification">Der Download passt nicht zum Repository und wurde nicht installiert.</string>
+    <string name="install_error_installer">Der Systeminstaller konnte nicht gestartet werden.</string>
+    <string name="install_error_conflict">Konflikt mit der installierten App, die womöglich mit einem anderen Schlüssel signiert ist.</string>
+    <string name="install_error_storage">Nicht genug Speicherplatz</string>
+    <string name="install_error_incompatible">Diese Uhr unterstützt die App nicht.</string>
+    <string name="install_error_status">Installation fehlgeschlagen (Status %1$d)</string>
+    <string name="install_permission_needed">Installieren von Apps erlauben</string>
+    <string name="install_permission_open_settings">Öffnet die Einstellungen</string>
+    <string name="install_permission_adb">Diese Uhr hat keine Einstellung dafür. Erlaube es an einem Computer mit: %1$s</string>
+
+    <string name="updates">Updates</string>
+    <string name="updates_none">Alle Apps sind aktuell.</string>
 </resources>

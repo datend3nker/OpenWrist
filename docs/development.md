@@ -27,6 +27,15 @@ The first start downloads the whole f-droid.org index (about 63 MB). On the
 two minutes (2026-10-14). Later refreshes only download changes. Not measured
 on a real watch yet (E2).
 
+On the same emulator, installing Catima's watch build (versionCode 201) and
+updating from build 200 to 201 worked, including the system confirmation
+(2026-10-14). The "Install unknown apps" setting exists there and can be
+switched on from OpenWrist. On watches without it:
+
+```sh
+adb shell appops set io.github.datend3nker.openwrist REQUEST_INSTALL_PACKAGES allow
+```
+
 ## Everyday commands
 
 ```sh

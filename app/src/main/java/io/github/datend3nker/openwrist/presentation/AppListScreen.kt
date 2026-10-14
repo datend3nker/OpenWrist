@@ -25,6 +25,7 @@ import io.github.datend3nker.openwrist.repo.RefreshState
 fun AppListScreen(
     onAppClick: (packageName: String) -> Unit,
     onSearchClick: () -> Unit,
+    onUpdatesClick: () -> Unit,
 ) {
     val viewModel =
         containerViewModel { AppListViewModel(it.watchApps, it.repoRefresher, it.appScope) }
@@ -40,6 +41,14 @@ fun AppListScreen(
                     onClick = onSearchClick,
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(stringResource(R.string.search)) },
+                )
+            }
+            item {
+                Button(
+                    onClick = onUpdatesClick,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.filledTonalButtonColors(),
+                    label = { Text(stringResource(R.string.updates)) },
                 )
             }
             item { RefreshButton(refreshState, onRefresh = viewModel::refresh) }
