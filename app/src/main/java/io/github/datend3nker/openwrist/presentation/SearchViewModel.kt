@@ -3,12 +3,16 @@ package io.github.datend3nker.openwrist.presentation
 import androidx.lifecycle.ViewModel
 import io.github.datend3nker.openwrist.repo.WatchApps
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import org.fdroid.database.AppListItem
 
 class SearchViewModel(
@@ -16,17 +20,28 @@ class SearchViewModel(
 ) : ViewModel() {
     private val mutableQuery = MutableStateFlow("")
 
-    /** The last searched text, empty before the first search. */
+    /** The text in the search field, as typed. */
     val query: StateFlow<String> = mutableQuery.asStateFlow()
 
-    /** Watch apps matching the last search, or null before the first search. */
-    @OptIn(ExperimentalCoroutinesApi::class)
+    /**
+     * Watch apps matching the typed text, or null while it is empty. The
+     * search waits until typing pauses, so not every key press runs a query.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val results: Flow<List<AppListItem>?> =
-        mutableQuery.flatMapLatest { query ->
-            if (query.isBlank()) flowOf(null) else watchApps.search(query)
-        }
+        mutableQuery
+            .map { it.trim() }
+            .distinctUntilChanged()
+            .debounce { if (it.isEmpty()) 0L else TYPING_PAUSE_MS }
+            .flatMapLatest { query ->
+                if (query.isEmpty()) flowOf(null) else watchApps.search(query)
+            }
 
     fun search(text: String) {
-        mutableQuery.value = text.trim()
+        mutableQuery.value = text
+    }
+
+    private companion object {
+        const val TYPING_PAUSE_MS = 300L
     }
 }
