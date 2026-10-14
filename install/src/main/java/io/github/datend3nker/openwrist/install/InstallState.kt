@@ -43,3 +43,16 @@ sealed interface InstallError {
         val status: Int,
     ) : InstallError
 }
+
+/** How an uninstallation ended. */
+sealed interface UninstallResult {
+    data object Uninstalled : UninstallResult
+
+    /** The user declined the system confirmation. */
+    data object Aborted : UninstallResult
+
+    /** [status] is one of the `PackageInstaller.STATUS_FAILURE*` constants. */
+    data class Failed(
+        val status: Int,
+    ) : UninstallResult
+}

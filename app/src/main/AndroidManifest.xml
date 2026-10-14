@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Installing apps through PackageInstaller. The user allows it once. -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- Uninstalling apps through PackageInstaller. Granted without asking;
+         Android still asks the user to confirm every uninstallation. -->
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
     <!-- An app store has to see all installed apps to offer updates for them,
          also for apps installed by other means. The F-Droid client does the same. -->
     <uses-permission

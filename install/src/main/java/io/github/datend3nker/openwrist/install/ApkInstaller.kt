@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.IntentSender
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageInstaller.SessionParams
 import android.content.pm.PackageManager
@@ -16,15 +17,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.resume
 
 /**
  * Installs APK files with [PackageInstaller] sessions, like the F-Droid
- * client. Android shows its own confirmation for every installation, so
- * nothing is installed without the user agreeing.
+ * client, and uninstalls apps. Android shows its own confirmation for every
+ * installation and uninstallation, so nothing happens without the user
+ * agreeing.
  *
- * Needs the `REQUEST_INSTALL_PACKAGES` permission, which the user has to
- * allow once, see [canInstall].
+ * Installing needs the `REQUEST_INSTALL_PACKAGES` permission, which the user
+ * has to allow once, see [canInstall]. Uninstalling needs
+ * `REQUEST_DELETE_PACKAGES`, which Android grants without asking.
  */
 class ApkInstaller(
     context: Context,
@@ -44,16 +48,60 @@ class ApkInstaller(
         apkFile: File,
     ): InstallState {
         val sessionId = withContext(Dispatchers.IO) { writeSession(packageName, apkFile) }
-        return suspendCancellableCoroutine { continuation ->
+        val status =
+            awaitResult(
+                requestId = sessionId,
+                packageName = packageName,
+                start = { installer.openSession(sessionId).use { session -> session.commit(it) } },
+                onCancel = { installer.abandonSession(sessionId) },
+            )
+        return when (status) {
+            PackageInstaller.STATUS_SUCCESS -> InstallState.Installed
+            PackageInstaller.STATUS_FAILURE_ABORTED -> InstallState.Aborted
+            else -> InstallState.Failed(InstallError.InstallerFailed(status))
+        }
+    }
+
+    /**
+     * Uninstalls [packageName] and suspends until Android reports the result.
+     * Android asks the user to confirm first.
+     */
+    suspend fun uninstall(packageName: String): UninstallResult {
+        val status =
+            awaitResult(
+                requestId = nextUninstallId.getAndDecrement(),
+                packageName = packageName,
+                start = { installer.uninstall(packageName, it) },
+            )
+        return when (status) {
+            PackageInstaller.STATUS_SUCCESS -> UninstallResult.Uninstalled
+            PackageInstaller.STATUS_FAILURE_ABORTED -> UninstallResult.Aborted
+            else -> UninstallResult.Failed(status)
+        }
+    }
+
+    /**
+     * Calls [start] with an [IntentSender] for the system's result and
+     * suspends until the final status arrives. Shows the system confirmation
+     * when Android asks for it. [requestId] tells the results apart: session
+     * IDs for installations, negative numbers for uninstallations.
+     */
+    private suspend fun awaitResult(
+        requestId: Int,
+        packageName: String,
+        start: (IntentSender) -> Unit,
+        onCancel: () -> Unit = {},
+    ): Int =
+        suspendCancellableCoroutine { continuation ->
             val receiver =
                 object : BroadcastReceiver() {
                     override fun onReceive(
                         receiverContext: Context,
                         intent: Intent,
                     ) {
-                        if (intent.getIntExtra(PackageInstaller.EXTRA_SESSION_ID, -1) != sessionId) return
+                        if (intent.getIntExtra(EXTRA_REQUEST_ID, 0) != requestId) return
                         val status = intent.getIntExtra(PackageInstaller.EXTRA_STATUS, Int.MIN_VALUE)
-                        Log.i(TAG, "Install status for $packageName: $status")
+                        Log.i(TAG, "Status for $packageName: $status")
                         if (status == PackageInstaller.STATUS_PENDING_USER_ACTION) {
                             // Show the system confirmation. Another broadcast follows.
                             IntentCompat
@@ -63,22 +111,21 @@ class ApkInstaller(
                             return
                         }
                         context.unregisterReceiver(this)
-                        if (continuation.isActive) continuation.resume(result(status))
+                        if (continuation.isActive) continuation.resume(status)
                     }
                 }
             ContextCompat.registerReceiver(
                 context,
                 receiver,
-                IntentFilter(ACTION_INSTALL_RESULT),
+                IntentFilter(ACTION_RESULT),
                 ContextCompat.RECEIVER_NOT_EXPORTED,
             )
             continuation.invokeOnCancellation {
                 runCatching { context.unregisterReceiver(receiver) }
-                runCatching { installer.abandonSession(sessionId) }
+                runCatching { onCancel() }
             }
-            installer.openSession(sessionId).use { it.commit(resultIntent(sessionId).intentSender) }
+            start(resultIntent(requestId).intentSender)
         }
-    }
 
     private fun writeSession(
         packageName: String,
@@ -104,25 +151,22 @@ class ApkInstaller(
     }
 
     /** The system adds the result to this intent, so it has to be mutable. */
-    private fun resultIntent(sessionId: Int): PendingIntent {
+    private fun resultIntent(requestId: Int): PendingIntent {
         val intent =
-            Intent(ACTION_INSTALL_RESULT).apply {
+            Intent(ACTION_RESULT).apply {
                 setPackage(context.packageName)
-                putExtra(PackageInstaller.EXTRA_SESSION_ID, sessionId)
+                putExtra(EXTRA_REQUEST_ID, requestId)
             }
         val flags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
-        return PendingIntent.getBroadcast(context, sessionId, intent, flags)
+        return PendingIntent.getBroadcast(context, requestId, intent, flags)
     }
-
-    private fun result(status: Int): InstallState =
-        when (status) {
-            PackageInstaller.STATUS_SUCCESS -> InstallState.Installed
-            PackageInstaller.STATUS_FAILURE_ABORTED -> InstallState.Aborted
-            else -> InstallState.Failed(InstallError.InstallerFailed(status))
-        }
 
     private companion object {
         const val TAG = "ApkInstaller"
-        const val ACTION_INSTALL_RESULT = "io.github.datend3nker.openwrist.install.INSTALL_RESULT"
+        const val ACTION_RESULT = "io.github.datend3nker.openwrist.install.RESULT"
+        const val EXTRA_REQUEST_ID = "io.github.datend3nker.openwrist.install.REQUEST_ID"
+
+        /** Session IDs are positive, so uninstallations count down from -1. */
+        val nextUninstallId = AtomicInteger(-1)
     }
 }
