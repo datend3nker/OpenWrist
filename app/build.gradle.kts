@@ -19,8 +19,24 @@ android {
         versionName = "0.1.0"
     }
 
+    // The release key and its passwords come from environment variables, so
+    // that nothing secret ends up in the repository. Without them the
+    // release APK is built unsigned. See docs/development.md.
+    val releaseKeystore = providers.environmentVariable("OPENWRIST_KEYSTORE").orNull
+    if (releaseKeystore != null) {
+        signingConfigs {
+            create("release") {
+                storeFile = file(releaseKeystore)
+                storePassword = providers.environmentVariable("OPENWRIST_KEYSTORE_PASSWORD").get()
+                keyAlias = providers.environmentVariable("OPENWRIST_KEY_ALIAS").get()
+                keyPassword = providers.environmentVariable("OPENWRIST_KEY_PASSWORD").get()
+            }
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = signingConfigs.findByName("release")
             optimization {
                 enable = true
                 packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")
@@ -30,6 +46,12 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    // The dependency metadata block is encrypted with a Google key that only
+    // Google Play can read. F-Droid and IzzyOnDroid reject APKs that carry it.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
     }
     buildFeatures {
         compose = true

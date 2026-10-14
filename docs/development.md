@@ -50,3 +50,33 @@ CI runs the same checks on every pull request
 `./gradlew ktlintFormat` fixes most formatting problems on its own. Lint
 settings live in `.editorconfig` (ktlint) and `config/detekt/detekt.yml`
 (only the differences from the detekt defaults).
+
+## Release builds
+
+`./gradlew assembleRelease` builds an unsigned release APK. To sign it, set
+these environment variables first:
+
+| Variable | Content |
+|---|---|
+| `OPENWRIST_KEYSTORE` | Path to the keystore file |
+| `OPENWRIST_KEYSTORE_PASSWORD` | Password of the keystore |
+| `OPENWRIST_KEY_ALIAS` | Alias of the key in the keystore |
+| `OPENWRIST_KEY_PASSWORD` | Password of the key |
+
+Keystores (`*.jks`, `*.keystore`) are ignored by Git. Keep the key and its
+passwords outside the repository and back them up: Android installs updates
+only if they are signed with the same key as the installed version.
+
+A keystore can be created with `keytool` from the JDK:
+
+```sh
+keytool -genkeypair -keystore openwrist-release.jks -alias openwrist \
+  -keyalg RSA -keysize 4096 -validity 10000
+```
+
+`apksigner verify --print-certs app/build/outputs/apk/release/app-release.apk`
+(from the Android SDK build tools) shows which key signed the APK.
+
+The release build leaves out the dependency metadata block that the Android
+Gradle plugin adds for Google Play. It is encrypted with a Google key, and
+F-Droid compatible repositories reject APKs that contain it.
