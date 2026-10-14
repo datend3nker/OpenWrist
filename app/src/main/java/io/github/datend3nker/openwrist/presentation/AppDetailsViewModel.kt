@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import io.github.datend3nker.openwrist.install.ApkInstaller
 import io.github.datend3nker.openwrist.install.InstallManager
 import io.github.datend3nker.openwrist.install.InstallState
+import io.github.datend3nker.openwrist.install.UninstallResult
 import io.github.datend3nker.openwrist.repo.AppDetails
 import io.github.datend3nker.openwrist.repo.WatchApps
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -53,6 +54,16 @@ class AppDetailsViewModel(
 
     /** False while the user has not allowed OpenWrist to install apps. */
     val canInstall: StateFlow<Boolean> = mutableCanInstall.asStateFlow()
+
+    private val mutableUninstalling = MutableStateFlow(false)
+
+    /** True while Android's uninstaller runs, including its confirmation. */
+    val uninstalling: StateFlow<Boolean> = mutableUninstalling.asStateFlow()
+
+    private val mutableUninstallError = MutableStateFlow<Int?>(null)
+
+    /** The `PackageInstaller` status of the last failed uninstallation, null if there is none. */
+    val uninstallError: StateFlow<Int?> = mutableUninstallError.asStateFlow()
 
     init {
         load()
@@ -105,6 +116,25 @@ class AppDetailsViewModel(
     }
 
     fun clearInstallState() = installManager.clearState(packageName)
+
+    fun uninstall() {
+        if (mutableUninstalling.value) return
+        mutableUninstalling.value = true
+        mutableUninstallError.value = null
+        viewModelScope.launch {
+            val result = apkInstaller.uninstall(packageName)
+            mutableUninstalling.value = false
+            when (result) {
+                UninstallResult.Uninstalled -> {
+                    // An old "installed" state would show the wrong button.
+                    installManager.clearState(packageName)
+                    load()
+                }
+                UninstallResult.Aborted -> Unit
+                is UninstallResult.Failed -> mutableUninstallError.value = result.status
+            }
+        }
+    }
 
     /** The intent that starts the installed app, null if it is not installed or has no launcher entry. */
     fun launchIntent(): Intent? = packageManager.getLaunchIntentForPackage(packageName)

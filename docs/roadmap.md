@@ -204,6 +204,7 @@ is adapted.
 - [x] **E6.6** Test that tampered APKs and indexes are rejected · `test` `install`
 - [x] **E6.7** Ask before updating an app that another store installed · `feature` `app`
   - The update starts only after the user agreed in a dialog.
+- [x] **E6.8** Uninstall apps · `feature` `install` `app`
 
 ### E7: First release
 

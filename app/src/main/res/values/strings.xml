@@ -51,4 +51,7 @@
     <string name="update_other_store_title">Installed by another store</string>
     <!-- %1$s is the name of the app store that installed the app, such as Google Play. -->
     <string name="update_other_store_text">%1$s installed this app. Update it with OpenWrist anyway? Later updates may then come from OpenWrist instead.</string>
+    <string name="uninstall">Uninstall</string>
+    <!-- %1$d is the status code of Android's package installer. -->
+    <string name="uninstall_error">Uninstalling failed (status %1$d)</string>
 </resources>

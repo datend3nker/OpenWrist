@@ -25,6 +25,7 @@ import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.CircularProgressIndicator
 import androidx.wear.compose.material3.ListHeader
 import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.OutlinedButton
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.Text
 import io.github.datend3nker.openwrist.R
@@ -48,6 +49,8 @@ fun AppDetailsScreen(packageName: String) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val installState by viewModel.installState.collectAsStateWithLifecycle()
     val canInstall by viewModel.canInstall.collectAsStateWithLifecycle()
+    val uninstalling by viewModel.uninstalling.collectAsStateWithLifecycle()
+    val uninstallError by viewModel.uninstallError.collectAsStateWithLifecycle()
     LifecycleResumeEffect(Unit) {
         viewModel.checkCanInstall()
         onPauseOrDispose {}
@@ -67,6 +70,9 @@ fun AppDetailsScreen(packageName: String) {
                     details.summary?.let { item { CenteredText(it) } }
                     item { VersionText(details) }
                     item { DetailsActions(details, current.otherStoreName, viewModel, installState, canInstall) }
+                    if (details.installedVersionName != null) {
+                        item { UninstallButton(uninstalling, uninstallError, onUninstall = viewModel::uninstall) }
+                    }
                     details.authorName?.let { item { CenteredText(stringResource(R.string.details_author, it)) } }
                     details.license?.let { item { CenteredText(stringResource(R.string.details_license, it)) } }
                     details.description?.let { html ->
@@ -141,6 +147,24 @@ private fun DetailsActions(
             },
             onDismiss = { askOtherStore = false },
         )
+    }
+}
+
+/** Starts Android's uninstaller, which asks the user to confirm. */
+@Composable
+private fun UninstallButton(
+    uninstalling: Boolean,
+    errorStatus: Int?,
+    onUninstall: () -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        OutlinedButton(
+            onClick = onUninstall,
+            enabled = !uninstalling,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(stringResource(R.string.uninstall)) },
+        )
+        if (errorStatus != null) CenteredText(stringResource(R.string.uninstall_error, errorStatus), small = true)
     }
 }
 

@@ -40,4 +40,6 @@
     <string name="updates_none">Alle Apps sind aktuell.</string>
     <string name="update_other_store_title">Von anderem Store installiert</string>
     <string name="update_other_store_text">%1$s hat diese App installiert. Trotzdem mit OpenWrist aktualisieren? Spätere Updates kommen dann eventuell von OpenWrist.</string>
+    <string name="uninstall">Deinstallieren</string>
+    <string name="uninstall_error">Deinstallieren fehlgeschlagen (Status %1$d)</string>
 </resources>
