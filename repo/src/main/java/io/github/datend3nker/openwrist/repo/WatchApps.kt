@@ -14,6 +14,7 @@ import org.fdroid.database.AppVersion
 import org.fdroid.database.DbUpdateChecker
 import org.fdroid.database.FDroidDatabase
 import org.fdroid.database.Repository
+import org.fdroid.database.UpdatableApp
 
 /** Everything the details screen shows about one app. */
 data class AppDetails(
@@ -65,6 +66,16 @@ class WatchApps(
             .asFlow()
             .map { items -> items.filter { it.isCompatible } }
             .flowOn(Dispatchers.Default)
+
+    /**
+     * Installed apps for which a newer watch build exists. Only versions
+     * signed with the installed app's key count, so an update never fails
+     * because of a different signer.
+     */
+    suspend fun updates(): List<UpdatableApp> =
+        withContext(Dispatchers.IO) {
+            updateChecker.getUpdatableApps().sortedBy { (it.name ?: it.packageName).lowercase() }
+        }
 
     /** Returns null if no enabled repository has an app with [packageName]. */
     suspend fun details(packageName: String): AppDetails? =
