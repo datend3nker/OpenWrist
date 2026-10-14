@@ -2,7 +2,7 @@ package io.github.datend3nker.openwrist.install
 
 import android.content.Context
 import android.util.Log
-import androidx.core.net.toUri
+import io.github.datend3nker.openwrist.repo.fileUri
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -132,17 +132,7 @@ class InstallManager(
         apkFile: File,
     ) {
         apkDir.mkdirs()
-        val uri =
-            repo.address
-                .toUri()
-                .buildUpon()
-                .apply {
-                    version.file.name
-                        .split("/")
-                        .filter { it.isNotEmpty() }
-                        .forEach { appendPath(it) }
-                }.build()
-        val downloader = downloaderFactory.create(repo, uri, version.file, apkFile)
+        val downloader = downloaderFactory.create(repo, repo.fileUri(version.file.name), version.file, apkFile)
         downloader.setListener { bytesRead, totalBytes ->
             val progress = if (totalBytes > 0) bytesRead.toFloat() / totalBytes else null
             setState(version.packageName, InstallState.Downloading(progress))
