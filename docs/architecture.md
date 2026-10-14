@@ -66,6 +66,14 @@ opens the system setting for it, or shows the ADB command if the watch has
 no such setting. The Updates screen lists installed apps with a newer watch
 build.
 
+### How app icons are loaded
+
+`AppIcons` (in `repo`) downloads an app's icon from its repository with the
+same downloader as APKs, so the SHA-256 hash from the signed index is checked.
+Icons are cached in `cacheDir/icons`, named after their hash; Android may
+delete them when storage runs low, and they are downloaded again when needed.
+Without network no icon is shown.
+
 The libraries come from Maven Central, see
 [ADR 0003](decisions/0003-build-on-fdroid-libraries.md).
 
