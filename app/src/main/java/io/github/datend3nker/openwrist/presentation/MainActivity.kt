@@ -1,26 +1,20 @@
 /**
- * Wear OS user interface of OpenWrist. For now it shows a placeholder screen.
+ * Wear OS user interface of OpenWrist: screens, navigation and the
+ * translations of everything the user sees.
  */
 package io.github.datend3nker.openwrist.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
-import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.ui.NavDisplay
 import androidx.wear.compose.material3.AppScaffold
-import androidx.wear.compose.material3.ListHeader
-import androidx.wear.compose.material3.ScreenScaffold
-import androidx.wear.compose.material3.Text
-import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
-import androidx.wear.compose.ui.tooling.preview.WearPreviewFontScales
-import io.github.datend3nker.openwrist.R
+import androidx.wear.compose.navigation3.rememberSwipeDismissableSceneStrategy
 import io.github.datend3nker.openwrist.presentation.theme.OpenWristTheme
 
 /** Entry point of the app on the watch. */
@@ -34,35 +28,41 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-/** Root composable. Shows the app name and that OpenWrist is an unofficial client. */
-@Composable
-fun WearApp() {
-    OpenWristTheme {
-        AppScaffold {
-            val listState = rememberTransformingLazyColumnState()
-            ScreenScaffold(scrollState = listState) { contentPadding ->
-                TransformingLazyColumn(contentPadding = contentPadding, state = listState) {
-                    item {
-                        ListHeader {
-                            Text(text = stringResource(R.string.app_name))
-                        }
-                    }
-                    item {
-                        Text(
-                            text = stringResource(R.string.unofficial_client),
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                        )
-                    }
-                }
-            }
-        }
-    }
+/** The screens of the app. Each one is an entry on the back stack. */
+sealed interface Screen {
+    data object AppList : Screen
+
+    data object Search : Screen
+
+    data class AppDetails(
+        val packageName: String,
+    ) : Screen
 }
 
-@WearPreviewDevices
-@WearPreviewFontScales
+/** Root composable. Swiping right goes back to the previous screen. */
 @Composable
-private fun WearAppPreview() {
-    WearApp()
+fun WearApp() {
+    val backStack = remember { mutableStateListOf<Screen>(Screen.AppList) }
+    OpenWristTheme {
+        AppScaffold {
+            NavDisplay(
+                backStack = backStack,
+                onBack = { backStack.removeLastOrNull() },
+                sceneStrategies = listOf(rememberSwipeDismissableSceneStrategy()),
+                entryProvider =
+                    entryProvider {
+                        entry<Screen.AppList> {
+                            AppListScreen(
+                                onAppClick = { backStack.add(Screen.AppDetails(it)) },
+                                onSearchClick = { backStack.add(Screen.Search) },
+                            )
+                        }
+                        entry<Screen.Search> {
+                            SearchScreen(onAppClick = { backStack.add(Screen.AppDetails(it)) })
+                        }
+                        entry<Screen.AppDetails> { AppDetailsScreen(it.packageName) }
+                    },
+            )
+        }
+    }
 }

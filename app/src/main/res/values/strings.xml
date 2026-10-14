@@ -2,4 +2,25 @@
     <!-- The name stays the same in every language. -->
     <string name="app_name" translatable="false">OpenWrist</string>
     <string name="unofficial_client">Unofficial client for F-Droid repositories</string>
+
+    <!-- App list -->
+    <string name="search">Search</string>
+    <string name="refresh">Refresh</string>
+    <string name="refreshing">Refreshing…</string>
+    <string name="refresh_failed">Refresh failed. Tap to retry.</string>
+    <string name="app_list_empty">No watch apps yet. Refresh to load the repositories.</string>
+
+    <!-- Search -->
+    <string name="search_hint">Search apps</string>
+    <string name="search_no_results">No watch apps found</string>
+
+    <!-- App details. %1$s is a name or a version. -->
+    <string name="details_not_found">This app is not available in any enabled repository.</string>
+    <string name="details_author">By %1$s</string>
+    <string name="details_license">License: %1$s</string>
+    <string name="details_version">Version %1$s</string>
+    <string name="details_installed">Installed: %1$s</string>
+    <!-- %1$s is the installed version, %2$s the new one. -->
+    <string name="details_update_available">Update: %1$s → %2$s</string>
+    <string name="details_no_compatible_version">No version for this watch</string>
 </resources>

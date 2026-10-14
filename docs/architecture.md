@@ -1,8 +1,7 @@
 # Architecture
 
-This document describes the planned structure. Only `app` exists so far.
-Modules are created once there is code for them; until then the list below is
-a plan, not a commitment.
+This document describes the structure of OpenWrist. `app` and `repo` exist;
+`install` is planned. Modules are created once there is code for them.
 
 ## Ground rules
 
@@ -22,15 +21,34 @@ a plan, not a commitment.
    and sealed classes, never display strings. See
    [ADR 0004](decisions/0004-translations-with-android-resources.md).
 
-## Planned modules
+## Modules
 
-All modules live in one Gradle project. Names are a proposal.
+All modules live in one Gradle project.
 
 | Module | Responsibility |
 |---|---|
-| `repo` | Repository index: download, parse, verify, local cache |
-| `install` | APK download, verification, installation, updates |
-| `app` | Wear OS user interface (Compose for Wear OS), navigation, translations. Exists, shows a placeholder screen |
+| `repo` | Repository index: download, verify and store it with the F-Droid libraries, answer which watch apps exist. Android library without UI |
+| `install` | APK download, verification, installation, updates. Planned |
+| `app` | Wear OS user interface (Compose for Wear OS), navigation, translations |
+
+### How the app list is filled
+
+1. `AppContainer` (in `app`) creates the F-Droid database. On first start,
+   `DefaultRepositories` adds f-droid.org (enabled) and its archive
+   (disabled), each with the certificate the index must be signed with.
+2. `RepoRefresher` runs the F-Droid library's `RepoUpdater` for every enabled
+   repository. It downloads the index, checks its signature and stores it.
+   This happens on start when an index is missing or older than a day, and
+   when the user taps "Refresh".
+3. While storing, every version is checked with `WatchCompatibilityChecker`.
+   It accepts a version only if it declares `android.hardware.type.watch` and
+   the F-Droid library's checker accepts it (SDK version, ABI of native code,
+   required features). The result is stored as `isCompatible`.
+4. `WatchApps` lists only apps with at least one compatible version. The
+   version it suggests is the newest compatible one.
+
+The libraries come from Maven Central, see
+[ADR 0003](decisions/0003-build-on-fdroid-libraries.md).
 
 The application ID and root package is `io.github.datend3nker.openwrist`, see
 [ADR 0006](decisions/0006-application-id.md). The app is standalone: it needs

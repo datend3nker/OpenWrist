@@ -175,12 +175,12 @@ is adapted.
 
 **Tickets:**
 
-- [ ] **E5.1** Download and cache the repository index · `feature` `repo`
-- [ ] **E5.2** Offer only versions that declare `android.hardware.type.watch` · `feature` `repo`
-- [ ] **E5.3** Offer only versions with native code for the watch's ABI · `feature` `repo`
-- [ ] **E5.4** Show the app list on a round screen · `feature` `app`
-- [ ] **E5.5** Search apps · `feature` `app`
-- [ ] **E5.6** Show app details · `feature` `app`
+- [x] **E5.1** Download and cache the repository index · `feature` `repo`
+- [x] **E5.2** Offer only versions that declare `android.hardware.type.watch` · `feature` `repo`
+- [x] **E5.3** Offer only versions with native code for the watch's ABI · `feature` `repo`
+- [x] **E5.4** Show the app list on a round screen · `feature` `app`
+- [x] **E5.5** Search apps · `feature` `app`
+- [x] **E5.6** Show app details · `feature` `app`
 
 ### E6: Install and update apps
 

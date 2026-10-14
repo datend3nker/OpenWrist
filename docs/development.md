@@ -22,6 +22,11 @@ Install and update behavior can differ between the emulator and real watches
 and between Wear OS versions. *Not verified yet.* For work on installation,
 test on a real watch.
 
+The first start downloads the whole f-droid.org index (about 63 MB). On the
+`WearOS-GMS` emulator image (API 37, x86_64) download and import took about
+two minutes (2026-10-14). Later refreshes only download changes. Not measured
+on a real watch yet (E2).
+
 ## Everyday commands
 
 ```sh

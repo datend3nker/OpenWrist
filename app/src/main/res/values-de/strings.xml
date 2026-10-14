@@ -1,3 +1,20 @@
 <resources>
     <string name="unofficial_client">Inoffizieller Client für F-Droid-Repositorys</string>
+
+    <string name="search">Suchen</string>
+    <string name="refresh">Aktualisieren</string>
+    <string name="refreshing">Wird aktualisiert…</string>
+    <string name="refresh_failed">Aktualisierung fehlgeschlagen. Tippen zum Wiederholen.</string>
+    <string name="app_list_empty">Noch keine Uhren-Apps. Aktualisieren lädt die Repositorys.</string>
+
+    <string name="search_hint">Apps suchen</string>
+    <string name="search_no_results">Keine Uhren-Apps gefunden</string>
+
+    <string name="details_not_found">Diese App ist in keinem aktiven Repository verfügbar.</string>
+    <string name="details_author">Von %1$s</string>
+    <string name="details_license">Lizenz: %1$s</string>
+    <string name="details_version">Version %1$s</string>
+    <string name="details_installed">Installiert: %1$s</string>
+    <string name="details_update_available">Update: %1$s → %2$s</string>
+    <string name="details_no_compatible_version">Keine Version für diese Uhr</string>
 </resources>
