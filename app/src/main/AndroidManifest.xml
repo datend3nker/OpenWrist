@@ -5,6 +5,8 @@
     <uses-feature android:name="android.hardware.type.watch" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- The daily update check notifies about available updates. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Installing apps through PackageInstaller. The user allows it once. -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!-- Uninstalling apps through PackageInstaller. Granted without asking;

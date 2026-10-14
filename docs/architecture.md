@@ -73,6 +73,15 @@ opens the system setting for it, or shows the ADB command if the watch has
 no such setting. The Updates screen lists installed apps with a newer watch
 build.
 
+### How the user learns about updates
+
+`UpdateCheckWorker` (in `app`) runs once a day with WorkManager, when the
+watch has network and the battery is not low. It refreshes the index if it
+is older than a day and shows a notification with the apps that have an
+update; tapping it opens the Updates screen. It never installs anything:
+every update is started and confirmed by the user. The notification needs
+the user's permission, which the app asks for when it starts.
+
 ### How app icons are loaded
 
 `AppIcons` (in `repo`) downloads an app's icon from its repository with the

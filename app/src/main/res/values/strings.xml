@@ -54,4 +54,9 @@
     <string name="uninstall">Uninstall</string>
     <!-- %1$d is the status code of Android's package installer. -->
     <string name="uninstall_error">Uninstalling failed (status %1$d)</string>
+    <string name="notification_channel_updates">App updates</string>
+    <plurals name="notification_updates">
+        <item quantity="one">%d app update available</item>
+        <item quantity="other">%d app updates available</item>
+    </plurals>
 </resources>

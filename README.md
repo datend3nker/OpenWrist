@@ -36,6 +36,7 @@ the F-Droid libraries and only shows apps built for watches.
 | Install apps on the watch | works on the emulator |
 | Update installed apps | works on the emulator |
 | Uninstall apps | works on the emulator |
+| Notify about updates once a day | works on the emulator |
 | Verify index and APK signatures | works on the emulator |
 | Add and manage repositories | planned, f-droid.org only for now |
 

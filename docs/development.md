@@ -96,3 +96,17 @@ exist; images are shared from `en-US`.
   `adb exec-out screencap -p > 1.png`. They are in `phoneScreenshots`
   because that is the folder phone clients show. Assumption: whether the
   repositories would also show a `wearScreenshots` folder was not checked.
+
+## Testing the daily update check
+
+WorkManager does not start a periodic job before its time, also not with
+`adb shell cmd jobscheduler run`. To test `UpdateCheckWorker`, enqueue it
+once in a local build, for example in `UpdateCheckWorker.schedule()`:
+
+```kotlin
+WorkManager.getInstance(context).enqueue(OneTimeWorkRequestBuilder<UpdateCheckWorker>().build())
+```
+
+Install an older version of a watch app first (on the emulator, Catima
+1.0.0 from f-droid.org) so there is an update to report. Do not commit the
+change.

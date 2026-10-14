@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.navigation3.runtime)
     implementation(libs.navigation3.ui)
     implementation(libs.wear.compose.navigation3)
+    implementation(libs.work.runtime)
     implementation(platform(libs.compose.bom))
     implementation(libs.activity.compose)
     implementation(libs.core.splashscreen)

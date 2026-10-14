@@ -250,8 +250,8 @@ is adapted.
 
 `epic` · `feature` · `install`
 
-- [ ] **E10.1** Check for updates in the background · `feature` `install`
-- [ ] **E10.2** Notify about available updates · `feature` `app`
+- [x] **E10.1** Check for updates in the background · `feature` `install`
+- [x] **E10.2** Notify about available updates · `feature` `app`
 
 ---
 
