@@ -48,4 +48,20 @@
         <item quantity="other">%d App-Updates verfügbar</item>
     </plurals>
     <string name="repositories">Repositorys</string>
+    <string name="add_repository">Repository hinzufügen</string>
+    <string name="add_repository_hint">Adresse des Repositorys</string>
+    <string name="add_repository_help">Adresse eines F-Droid-kompatiblen Repositorys. Endet sie mit ?fingerprint=…, wird auch der Schlüssel geprüft.</string>
+    <string name="add_repository_load">Laden</string>
+    <string name="add_repository_loading">Repository wird geladen…</string>
+    <string name="add_repository_fingerprint">Schlüssel-Fingerprint: %1$s</string>
+    <string name="add_repository_compare">Vergleiche vor dem Hinzufügen den Fingerprint mit dem, den das Repository veröffentlicht.</string>
+    <string name="add_repository_add">Hinzufügen</string>
+    <string name="add_repository_adding">Wird hinzugefügt…</string>
+    <string name="add_repository_exists">Dieses Repository ist schon hinzugefügt.</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="add_repository_error_disallowed">Diese Uhr erlaubt keine Installation aus unbekannten Quellen.</string>
+    <string name="add_repository_error_fingerprint">Das Repository ist nicht mit dem Schlüssel dieses Fingerprints signiert.</string>
+    <string name="add_repository_error_archive">Das ist ein Archiv. Füge stattdessen das Haupt-Repository hinzu.</string>
+    <string name="add_repository_error_index">Unter dieser Adresse wurde kein gültiges Repository gefunden.</string>
+    <string name="add_repository_error_io">Das Repository konnte nicht geladen werden. Prüfe Adresse und Verbindung.</string>
 </resources>

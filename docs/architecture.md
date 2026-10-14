@@ -55,6 +55,14 @@ disabling goes through the F-Droid library's `RepoManager`, created in
 repositories are not listed. Enabling a repository refreshes the indexes
 right away, as it may have none yet.
 
+A repository is added by its address in two steps, as `RepoManager` does
+it: it downloads and verifies the index and shows a preview with the
+repository's name and key fingerprint; only when the user taps "Add" is
+the repository stored, together with its apps. If the address carries a
+`fingerprint` parameter, an index signed with another key is rejected.
+Without it, the key of the first download is trusted from then on, so the
+preview asks the user to compare the fingerprint.
+
 ### How an app is installed
 
 1. The details screen shows the version `WatchApps` suggests. For a new

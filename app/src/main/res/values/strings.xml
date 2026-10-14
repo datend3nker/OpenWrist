@@ -60,4 +60,20 @@
         <item quantity="other">%d app updates available</item>
     </plurals>
     <string name="repositories">Repositories</string>
+    <string name="add_repository">Add repository</string>
+    <string name="add_repository_hint">Repository address</string>
+    <string name="add_repository_help">Address of an F-Droid compatible repository. If it ends with ?fingerprint=…, the key is checked too.</string>
+    <string name="add_repository_load">Load</string>
+    <string name="add_repository_loading">Loading the repository…</string>
+    <string name="add_repository_fingerprint">Key fingerprint: %1$s</string>
+    <string name="add_repository_compare">Before adding, compare the fingerprint with the one the repository publishes.</string>
+    <string name="add_repository_add">Add</string>
+    <string name="add_repository_adding">Adding…</string>
+    <string name="add_repository_exists">This repository is already added.</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_repository_error_disallowed">This watch does not allow installing from unknown sources.</string>
+    <string name="add_repository_error_fingerprint">The repository is not signed with the key of this fingerprint.</string>
+    <string name="add_repository_error_archive">This is an archive. Add the main repository instead.</string>
+    <string name="add_repository_error_index">No valid repository found at this address.</string>
+    <string name="add_repository_error_io">Could not load the repository. Check the address and the connection.</string>
 </resources>

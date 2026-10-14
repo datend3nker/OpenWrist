@@ -237,8 +237,11 @@ is adapted.
 `epic` · `feature` · `repo`
 
 - [x] **E8.1** Show and enable or disable repositories · `feature` `repo` `app`
-- [ ] **E8.2** Add a repository by URL and fingerprint · `feature` `repo` `app`
+- [x] **E8.2** Add a repository by URL and fingerprint · `feature` `repo` `app`
   - Typing on a watch is hard; consider other ways, such as a QR code.
+- [ ] **E8.3** Add a repository without typing its address · `feature` `app`
+  - For example from a QR code or a link sent from the phone.
+- [ ] **E8.4** Remove a repository that the user added · `feature` `app`
 
 ### E9: App icons
 

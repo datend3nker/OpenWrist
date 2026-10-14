@@ -12,6 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
+import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ListHeader
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.SwitchButton
@@ -20,7 +21,7 @@ import io.github.datend3nker.openwrist.R
 
 /** The repositories OpenWrist knows, each with a switch to enable or disable it. */
 @Composable
-fun RepositoriesScreen() {
+fun RepositoriesScreen(onAddClick: () -> Unit) {
     val viewModel = containerViewModel { RepositoriesViewModel(it.repoManager, it.repoRefresher, it.appScope) }
     val repositories by viewModel.repositories.collectAsStateWithLifecycle()
     val listState = rememberTransformingLazyColumnState()
@@ -50,6 +51,13 @@ fun RepositoriesScreen() {
                             overflow = TextOverflow.Ellipsis,
                         )
                     },
+                )
+            }
+            item {
+                Button(
+                    onClick = onAddClick,
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text(stringResource(R.string.add_repository)) },
                 )
             }
         }

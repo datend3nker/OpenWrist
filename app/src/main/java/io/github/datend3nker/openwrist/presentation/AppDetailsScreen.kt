@@ -199,8 +199,9 @@ private fun VersionText(details: AppDetails) {
     CenteredText(text)
 }
 
+/** Text centered on the round screen; [small] for secondary information. */
 @Composable
-private fun CenteredText(
+fun CenteredText(
     text: String,
     small: Boolean = false,
 ) {
