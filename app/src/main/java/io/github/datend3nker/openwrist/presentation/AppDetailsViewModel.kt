@@ -27,6 +27,8 @@ sealed interface DetailsState {
 
     data class Loaded(
         val details: AppDetails,
+        /** The name of the app store that installed the app, if it is another one. */
+        val otherStoreName: String?,
     ) : DetailsState
 }
 
@@ -35,6 +37,7 @@ class AppDetailsViewModel(
     private val installManager: InstallManager,
     private val apkInstaller: ApkInstaller,
     private val packageManager: PackageManager,
+    private val ownPackageName: String,
     private val packageName: String,
 ) : ViewModel() {
     private val mutableState = MutableStateFlow<DetailsState>(DetailsState.Loading)
@@ -62,7 +65,30 @@ class AppDetailsViewModel(
     private fun load() {
         viewModelScope.launch {
             val details = watchApps.details(packageName)
-            mutableState.value = if (details == null) DetailsState.NotFound else DetailsState.Loaded(details)
+            mutableState.value =
+                if (details == null) DetailsState.NotFound else DetailsState.Loaded(details, otherStoreName())
+        }
+    }
+
+    /**
+     * The name of the app store that installed this app, or null if the app
+     * is not installed, OpenWrist installed it, or it was installed over ADB.
+     * Updating an app that another store installed takes it away from that
+     * store, so the details screen asks the user first.
+     */
+    private fun otherStoreName(): String? {
+        val installer =
+            try {
+                packageManager.getInstallSourceInfo(packageName).installingPackageName
+            } catch (_: PackageManager.NameNotFoundException) {
+                null
+            }
+        if (installer == null || installer == ownPackageName || installer == ADB_INSTALLER) return null
+        return try {
+            packageManager.getApplicationLabel(packageManager.getApplicationInfo(installer, 0)).toString()
+        } catch (_: PackageManager.NameNotFoundException) {
+            // The store was uninstalled in the meantime.
+            installer
         }
     }
 
@@ -82,4 +108,9 @@ class AppDetailsViewModel(
 
     /** The intent that starts the installed app, null if it is not installed or has no launcher entry. */
     fun launchIntent(): Intent? = packageManager.getLaunchIntentForPackage(packageName)
+
+    private companion object {
+        /** Recorded as installer for apps installed with `adb install`. */
+        const val ADB_INSTALLER = "com.android.shell"
+    }
 }

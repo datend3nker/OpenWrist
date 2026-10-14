@@ -202,6 +202,8 @@ is adapted.
   - Based on the results of E1.
 - [x] **E6.5** Detect and install updates · `feature` `install`
 - [x] **E6.6** Test that tampered APKs and indexes are rejected · `test` `install`
+- [x] **E6.7** Ask before updating an app that another store installed · `feature` `app`
+  - The update starts only after the user agreed in a dialog.
 
 ### E7: First release
 

@@ -48,4 +48,7 @@
     <!-- Updates -->
     <string name="updates">Updates</string>
     <string name="updates_none">All apps are up to date.</string>
+    <string name="update_other_store_title">Installed by another store</string>
+    <!-- %1$s is the name of the app store that installed the app, such as Google Play. -->
+    <string name="update_other_store_text">%1$s installed this app. Update it with OpenWrist anyway? Later updates may then come from OpenWrist instead.</string>
 </resources>

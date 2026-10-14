@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -15,6 +18,8 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
+import androidx.wear.compose.material3.AlertDialog
+import androidx.wear.compose.material3.AlertDialogDefaults
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.CircularProgressIndicator
@@ -31,7 +36,14 @@ fun AppDetailsScreen(packageName: String) {
     val context = LocalContext.current
     val viewModel =
         containerViewModel(key = packageName) {
-            AppDetailsViewModel(it.watchApps, it.installManager, it.apkInstaller, context.packageManager, packageName)
+            AppDetailsViewModel(
+                it.watchApps,
+                it.installManager,
+                it.apkInstaller,
+                context.packageManager,
+                context.packageName,
+                packageName,
+            )
         }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val installState by viewModel.installState.collectAsStateWithLifecycle()
@@ -54,7 +66,7 @@ fun AppDetailsScreen(packageName: String) {
                     item { ListHeader { Text(details.name, textAlign = TextAlign.Center) } }
                     details.summary?.let { item { CenteredText(it) } }
                     item { VersionText(details) }
-                    item { DetailsActions(details, viewModel, installState, canInstall) }
+                    item { DetailsActions(details, current.otherStoreName, viewModel, installState, canInstall) }
                     details.authorName?.let { item { CenteredText(stringResource(R.string.details_author, it)) } }
                     details.license?.let { item { CenteredText(stringResource(R.string.details_license, it)) } }
                     details.description?.let { html ->
@@ -75,22 +87,31 @@ fun AppDetailsScreen(packageName: String) {
 
 private val DetailsIconSize = 48.dp
 
-/** Install or update, the permission hint if needed, and opening the installed app. */
+/**
+ * Install or update, the permission hint if needed, and opening the installed
+ * app. An app that another store installed is only updated after the user
+ * agreed in a dialog.
+ */
 @Composable
 private fun DetailsActions(
     details: AppDetails,
+    otherStoreName: String?,
     viewModel: AppDetailsViewModel,
     installState: InstallState?,
     canInstall: Boolean,
 ) {
     val context = LocalContext.current
+    val isUpdate = details.installedVersionName != null
+    var askOtherStore by rememberSaveable { mutableStateOf(false) }
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         if (details.suggestedVersion != null) {
             if (canInstall) {
                 InstallButton(
                     state = installState,
-                    isUpdate = details.installedVersionName != null,
-                    onInstall = viewModel::install,
+                    isUpdate = isUpdate,
+                    onInstall = {
+                        if (isUpdate && otherStoreName != null) askOtherStore = true else viewModel.install()
+                    },
                     onRetry = {
                         viewModel.clearInstallState()
                         viewModel.install()
@@ -110,6 +131,33 @@ private fun DetailsActions(
             )
         }
     }
+    if (otherStoreName != null) {
+        UpdateFromOtherStoreDialog(
+            visible = askOtherStore,
+            otherStoreName = otherStoreName,
+            onConfirm = {
+                askOtherStore = false
+                viewModel.install()
+            },
+            onDismiss = { askOtherStore = false },
+        )
+    }
+}
+
+@Composable
+private fun UpdateFromOtherStoreDialog(
+    visible: Boolean,
+    otherStoreName: String,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        visible = visible,
+        onDismissRequest = onDismiss,
+        confirmButton = { AlertDialogDefaults.ConfirmButton(onClick = onConfirm) },
+        title = { Text(stringResource(R.string.update_other_store_title)) },
+        text = { Text(stringResource(R.string.update_other_store_text, otherStoreName)) },
+    )
 }
 
 @Composable

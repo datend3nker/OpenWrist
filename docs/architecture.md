@@ -61,6 +61,11 @@ All modules live in one Gradle project.
 4. `ApkInstaller` hands the APK to `PackageInstaller`. Android shows its own
    confirmation; nothing is installed without the user agreeing.
 
+If another app store installed the app (Android records the installer),
+the details screen asks before updating it, because the update takes the
+app away from that store: after it, Android records OpenWrist as installer.
+Apps installed over ADB or by OpenWrist are updated without that question.
+
 The user has to allow OpenWrist to install apps once. The details screen
 opens the system setting for it, or shows the ADB command if the watch has
 no such setting. The Updates screen lists installed apps with a newer watch
