@@ -42,6 +42,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- Repository links, as F-Droid compatible repositories publish
+                 them. They open the screen that adds the repository. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="fdroidrepos" />
+                <data android:scheme="fdroidrepo" />
+            </intent-filter>
         </activity>
     </application>
 
