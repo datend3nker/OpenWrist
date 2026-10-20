@@ -110,3 +110,17 @@ WorkManager.getInstance(context).enqueue(OneTimeWorkRequestBuilder<UpdateCheckWo
 Install an older version of a watch app first (on the emulator, Catima
 1.0.0 from f-droid.org) so there is an update to report. Do not commit the
 change.
+
+## Testing repository links
+
+A repository link can be sent to the emulator or a watch over ADB. It opens
+the screen that adds the repository, with the address filled in:
+
+```sh
+adb shell am start -a android.intent.action.VIEW \
+  -d "'fdroidrepos://apt.izzysoft.de/fdroid/repo?fingerprint=3BF0D6ABFEAE2F401707B6D966BE743BF0EEE49C2561B9BA39073711F628937A'"
+```
+
+Text typed with `adb shell input text` does not reach text fields through
+the Wear OS keyboard, so this is also the easiest way to test adding a
+repository.

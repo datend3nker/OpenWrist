@@ -5,6 +5,7 @@
 package io.github.datend3nker.openwrist.presentation
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -33,8 +34,10 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         val openUpdates = intent.getBooleanExtra(EXTRA_OPEN_UPDATES, false)
+        // A repository link such as fdroidrepos://example.org/repo?fingerprint=…
+        val repositoryLink = intent.takeIf { it.action == Intent.ACTION_VIEW }?.dataString
         setContent {
-            WearApp(openUpdates)
+            WearApp(openUpdates, repositoryLink)
         }
         if (savedInstanceState == null) askForNotifications()
     }
@@ -64,7 +67,10 @@ sealed interface Screen {
 
     data object Repositories : Screen
 
-    data object AddRepository : Screen
+    /** [address] is filled in when the screen was opened from a repository link. */
+    data class AddRepository(
+        val address: String = "",
+    ) : Screen
 
     data class RepositoryDetails(
         val repoId: Long,
@@ -77,13 +83,23 @@ sealed interface Screen {
 
 /**
  * Root composable. Swiping right goes back to the previous screen. With
- * [openUpdates] it starts on the Updates screen, above the app list.
+ * [openUpdates] it starts on the Updates screen, with [repositoryLink] on
+ * the screen that adds that repository; both above the app list.
  */
 @Composable
-fun WearApp(openUpdates: Boolean = false) {
+fun WearApp(
+    openUpdates: Boolean = false,
+    repositoryLink: String? = null,
+) {
     val backStack =
         remember {
-            val start = if (openUpdates) listOf(Screen.AppList, Screen.Updates) else listOf(Screen.AppList)
+            val start =
+                when {
+                    repositoryLink != null ->
+                        listOf(Screen.AppList, Screen.Repositories, Screen.AddRepository(repositoryLink))
+                    openUpdates -> listOf(Screen.AppList, Screen.Updates)
+                    else -> listOf(Screen.AppList)
+                }
             mutableStateListOf<Screen>().apply { addAll(start) }
         }
     OpenWristTheme {
@@ -111,14 +127,14 @@ fun WearApp(openUpdates: Boolean = false) {
                         entry<Screen.Repositories> {
                             RepositoriesScreen(
                                 onRepositoryClick = { backStack.add(Screen.RepositoryDetails(it)) },
-                                onAddClick = { backStack.add(Screen.AddRepository) },
+                                onAddClick = { backStack.add(Screen.AddRepository()) },
                             )
                         }
                         entry<Screen.RepositoryDetails> {
                             RepositoryDetailsScreen(it.repoId, onRemoved = { backStack.removeLastOrNull() })
                         }
                         entry<Screen.AddRepository> {
-                            AddRepositoryScreen(onAdded = { backStack.removeLastOrNull() })
+                            AddRepositoryScreen(it.address, onAdded = { backStack.removeLastOrNull() })
                         }
                         entry<Screen.AppDetails> { AppDetailsScreen(it.packageName) }
                     },

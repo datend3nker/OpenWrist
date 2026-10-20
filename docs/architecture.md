@@ -63,6 +63,12 @@ the repository stored, together with its apps. If the address carries a
 Without it, the key of the first download is trusted from then on, so the
 preview asks the user to compare the fingerprint.
 
+Repository links (`fdroidrepos://` and `fdroidrepo://`, as repositories
+publish them) open the same screen with the address filled in, so nothing
+has to be typed. The user still loads the preview and adds the repository.
+OpenWrist does not register `fdroid.link`, which belongs to the F-Droid
+project.
+
 Tapping a repository's name opens its details. Repositories the user added
 can be removed there after confirming; `RepoManager` deletes them with their
 apps. Installed apps stay installed but get no updates from that repository

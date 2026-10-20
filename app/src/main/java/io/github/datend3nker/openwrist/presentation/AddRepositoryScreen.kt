@@ -35,15 +35,19 @@ import org.fdroid.repo.None
 /**
  * Adds a repository by its address: enter it, check the preview with the
  * repository's name and key fingerprint, then add it. Goes back with
- * [onAdded] once the repository is stored.
+ * [onAdded] once the repository is stored. [initialAddress] comes from a
+ * repository link; the user still loads and adds it.
  */
 @Composable
-fun AddRepositoryScreen(onAdded: () -> Unit) {
+fun AddRepositoryScreen(
+    initialAddress: String,
+    onAdded: () -> Unit,
+) {
     val viewModel = containerViewModel { AddRepositoryViewModel(it.repoManager) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val listState = rememberTransformingLazyColumnState()
     // Kept here, so the address is still there after "Try again".
-    val address = rememberTextFieldState()
+    val address = rememberTextFieldState(initialAddress)
     LaunchedEffect(state) {
         if (state is Added) onAdded()
     }
