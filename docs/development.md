@@ -96,6 +96,9 @@ exist; images are shared from `en-US`.
   `adb exec-out screencap -p > 1.png`. They are in `phoneScreenshots`
   because that is the folder phone clients show. Assumption: whether the
   repositories would also show a `wearScreenshots` folder was not checked.
+- `changelogs/<versionCode>.txt` holds the release notes of one version,
+  at most 500 bytes. Add one file per locale for every release, named after
+  the `versionCode` in `app/build.gradle.kts`.
 
 ## Testing the daily update check
 
