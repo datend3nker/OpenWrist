@@ -120,10 +120,10 @@ or moves into this repository with the F-Droid libraries as dependencies.
 
 **Tickets:**
 
-- [ ] **E3.1** Check how the F-Droid libraries can be used outside the client · `research`
+- [x] **E3.1** Check how the F-Droid libraries can be used outside the client · `research`
   - It is clear whether they are published as artifacts or have to be
     vendored, and what that means for updates.
-- [ ] **E3.2** Decide where the code lives · `research` `docs`
+- [x] **E3.2** Decide where the code lives · `research` `docs`
   - ADR 0003 is accepted or superseded.
 - [ ] **E3.3** Confirm or revise Kotlin and Compose for Wear OS · `research` `docs`
   - ADR 0002 is accepted or superseded.
@@ -143,17 +143,21 @@ is adapted.
 
 **Tickets:**
 
-- [ ] **E4.1** Set up the Gradle project with wrapper and version catalog · `task`
+- [x] **E4.1** Set up the Gradle project with wrapper and version catalog · `task`
   - `./gradlew build` works on a fresh clone.
-- [ ] **E4.2** Add the `app` module with an empty Compose for Wear OS screen · `feature` `app`
+- [x] **E4.2** Add the `app` module with an empty Compose for Wear OS screen · `feature` `app`
   - The app starts on the Wear OS emulator; the application ID is chosen.
-- [ ] **E4.3** Set up ktlint and detekt · `task`
+- [x] **E4.3** Set up ktlint and detekt · `task`
   - `./gradlew ktlintCheck detekt` runs and fails on violations.
-- [ ] **E4.4** Add CI workflow for lint, detekt and unit tests · `task` `ci`
+- [x] **E4.4** Add CI workflow for lint, detekt and unit tests · `task` `ci`
   - Pull requests show a failing check on lint, detekt or test errors.
-- [ ] **E4.5** Add string resources with a test translation · `task` `i18n`
+- [x] **E4.5** Add string resources with a test translation · `task` `i18n`
   - The placeholder text comes from `strings.xml`
     ([ADR 0004](decisions/0004-translations-with-android-resources.md)).
+- [x] **E4.6** Keep dependencies up to date with Dependabot · `task` `ci`
+  - Dependabot opens pull requests for new versions in
+    `gradle/libs.versions.toml`, the Gradle wrapper and the GitHub Actions
+    in `.github/workflows/`.
 
 ---
 
@@ -171,12 +175,12 @@ is adapted.
 
 **Tickets:**
 
-- [ ] **E5.1** Download and cache the repository index · `feature` `repo`
-- [ ] **E5.2** Offer only versions that declare `android.hardware.type.watch` · `feature` `repo`
-- [ ] **E5.3** Offer only versions with native code for the watch's ABI · `feature` `repo`
-- [ ] **E5.4** Show the app list on a round screen · `feature` `app`
-- [ ] **E5.5** Search apps · `feature` `app`
-- [ ] **E5.6** Show app details · `feature` `app`
+- [x] **E5.1** Download and cache the repository index · `feature` `repo`
+- [x] **E5.2** Offer only versions that declare `android.hardware.type.watch` · `feature` `repo`
+- [x] **E5.3** Offer only versions with native code for the watch's ABI · `feature` `repo`
+- [x] **E5.4** Show the app list on a round screen · `feature` `app`
+- [x] **E5.5** Search apps · `feature` `app`
+- [x] **E5.6** Show app details · `feature` `app`
 
 ### E6: Install and update apps
 
@@ -191,13 +195,16 @@ is adapted.
 
 **Tickets:**
 
-- [ ] **E6.1** Verify the index signature · `feature` `repo`
-- [ ] **E6.2** Download APKs and verify checksum and signature · `feature` `install`
-- [ ] **E6.3** Install through `PackageInstaller` with the system confirmation · `feature` `install`
-- [ ] **E6.4** Guide users through the install permission · `feature` `app`
+- [x] **E6.1** Verify the index signature · `feature` `repo`
+- [x] **E6.2** Download APKs and verify checksum and signature · `feature` `install`
+- [x] **E6.3** Install through `PackageInstaller` with the system confirmation · `feature` `install`
+- [x] **E6.4** Guide users through the install permission · `feature` `app`
   - Based on the results of E1.
-- [ ] **E6.5** Detect and install updates · `feature` `install`
-- [ ] **E6.6** Test that tampered APKs and indexes are rejected · `test` `install`
+- [x] **E6.5** Detect and install updates · `feature` `install`
+- [x] **E6.6** Test that tampered APKs and indexes are rejected · `test` `install`
+- [x] **E6.7** Ask before updating an app that another store installed · `feature` `app`
+  - The update starts only after the user agreed in a dialog.
+- [x] **E6.8** Uninstall apps · `feature` `install` `app`
 
 ### E7: First release
 
@@ -210,9 +217,9 @@ is adapted.
 
 **Tickets:**
 
-- [ ] **E7.1** Set up signed release builds · `task` `packaging`
-- [ ] **E7.2** Add German translation · `feature` `i18n`
-- [ ] **E7.3** Add store metadata (description, screenshots) · `task` `packaging`
+- [x] **E7.1** Set up signed release builds · `task` `packaging`
+- [x] **E7.2** Add German translation · `feature` `i18n`
+- [x] **E7.3** Add store metadata (description, screenshots) · `task` `packaging`
 - [ ] **E7.4** Submit OpenWrist to f-droid.org or IzzyOnDroid · `task` `packaging`
 - [ ] **E7.5** Prepare the repository for going public · `docs`
   - [ADR 0005](decisions/0005-license-gpl-3.0.md) reviewed, code-of-conduct
@@ -229,22 +236,25 @@ is adapted.
 
 `epic` · `feature` · `repo`
 
-- [ ] **E8.1** Show and enable or disable repositories · `feature` `repo` `app`
-- [ ] **E8.2** Add a repository by URL and fingerprint · `feature` `repo` `app`
+- [x] **E8.1** Show and enable or disable repositories · `feature` `repo` `app`
+- [x] **E8.2** Add a repository by URL and fingerprint · `feature` `repo` `app`
   - Typing on a watch is hard; consider other ways, such as a QR code.
+- [ ] **E8.3** Add a repository without typing its address · `feature` `app`
+  - For example from a QR code or a link sent from the phone.
+- [x] **E8.4** Remove a repository that the user added · `feature` `app`
 
 ### E9: App icons
 
 `epic` · `feature` · `app`
 
-- [ ] **E9.1** Show app icons in the list and details · `feature` `app`
+- [x] **E9.1** Show app icons in the list and details · `feature` `app`
 
 ### E10: Background updates
 
 `epic` · `feature` · `install`
 
-- [ ] **E10.1** Check for updates in the background · `feature` `install`
-- [ ] **E10.2** Notify about available updates · `feature` `app`
+- [x] **E10.1** Check for updates in the background · `feature` `install`
+- [x] **E10.2** Notify about available updates · `feature` `app`
 
 ---
 

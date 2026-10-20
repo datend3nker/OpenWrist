@@ -1,0 +1,71 @@
+<resources>
+    <string name="unofficial_client">Inoffizieller Client für F-Droid-Repositorys</string>
+
+    <string name="search">Suchen</string>
+    <string name="refresh">Aktualisieren</string>
+    <string name="refreshing">Wird aktualisiert…</string>
+    <string name="refresh_failed">Aktualisierung fehlgeschlagen. Tippen zum Wiederholen.</string>
+    <string name="app_list_empty">Noch keine Uhren-Apps. Aktualisieren lädt die Repositorys.</string>
+
+    <string name="search_hint">Apps suchen</string>
+    <string name="search_no_results">Keine Uhren-Apps gefunden</string>
+
+    <string name="details_not_found">Diese App ist in keinem aktiven Repository verfügbar.</string>
+    <string name="details_author">Von %1$s</string>
+    <string name="details_license">Lizenz: %1$s</string>
+    <string name="details_version">Version %1$s</string>
+    <string name="details_installed">Installiert: %1$s</string>
+    <string name="details_update_available">Update: %1$s → %2$s</string>
+    <string name="details_no_compatible_version">Keine Version für diese Uhr</string>
+
+    <string name="install">Installieren</string>
+    <string name="install_update">Aktualisieren</string>
+    <string name="open">Öffnen</string>
+    <string name="install_downloading">Wird heruntergeladen…</string>
+    <string name="install_verifying">Wird geprüft…</string>
+    <string name="install_installing">Wird installiert…</string>
+    <string name="install_retry">Erneut versuchen</string>
+    <string name="install_error_download">Download fehlgeschlagen</string>
+    <string name="install_error_verification">Der Download passt nicht zum Repository und wurde nicht installiert.</string>
+    <string name="install_error_installer">Der Systeminstaller konnte nicht gestartet werden.</string>
+    <string name="install_error_conflict">Konflikt mit der installierten App, die womöglich mit einem anderen Schlüssel signiert ist.</string>
+    <string name="install_error_storage">Nicht genug Speicherplatz</string>
+    <string name="install_error_incompatible">Diese Uhr unterstützt die App nicht.</string>
+    <string name="install_error_status">Installation fehlgeschlagen (Status %1$d)</string>
+    <string name="install_permission_needed">Installieren von Apps erlauben</string>
+    <string name="install_permission_open_settings">Öffnet die Einstellungen</string>
+    <string name="install_permission_adb">Diese Uhr hat keine Einstellung dafür. Erlaube es an einem Computer mit: %1$s</string>
+
+    <string name="updates">Updates</string>
+    <string name="updates_none">Alle Apps sind aktuell.</string>
+    <string name="update_other_store_title">Von anderem Store installiert</string>
+    <string name="update_other_store_text">%1$s hat diese App installiert. Trotzdem mit OpenWrist aktualisieren? Spätere Updates kommen dann eventuell von OpenWrist.</string>
+    <string name="uninstall">Deinstallieren</string>
+    <string name="uninstall_error">Deinstallieren fehlgeschlagen (Status %1$d)</string>
+    <string name="notification_channel_updates">App-Updates</string>
+    <plurals name="notification_updates">
+        <item quantity="one">%d App-Update verfügbar</item>
+        <item quantity="other">%d App-Updates verfügbar</item>
+    </plurals>
+    <string name="repositories">Repositorys</string>
+    <string name="add_repository">Repository hinzufügen</string>
+    <string name="add_repository_hint">Adresse des Repositorys</string>
+    <string name="add_repository_help">Adresse eines F-Droid-kompatiblen Repositorys. Endet sie mit ?fingerprint=…, wird auch der Schlüssel geprüft.</string>
+    <string name="add_repository_load">Laden</string>
+    <string name="add_repository_loading">Repository wird geladen…</string>
+    <string name="add_repository_fingerprint">Schlüssel-Fingerprint: %1$s</string>
+    <string name="add_repository_compare">Vergleiche vor dem Hinzufügen den Fingerprint mit dem, den das Repository veröffentlicht.</string>
+    <string name="add_repository_add">Hinzufügen</string>
+    <string name="add_repository_adding">Wird hinzugefügt…</string>
+    <string name="add_repository_exists">Dieses Repository ist schon hinzugefügt.</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="add_repository_error_disallowed">Diese Uhr erlaubt keine Installation aus unbekannten Quellen.</string>
+    <string name="add_repository_error_fingerprint">Das Repository ist nicht mit dem Schlüssel dieses Fingerprints signiert.</string>
+    <string name="add_repository_error_archive">Das ist ein Archiv. Füge stattdessen das Haupt-Repository hinzu.</string>
+    <string name="add_repository_error_index">Unter dieser Adresse wurde kein gültiges Repository gefunden.</string>
+    <string name="add_repository_error_io">Das Repository konnte nicht geladen werden. Prüfe Adresse und Verbindung.</string>
+    <string name="repository_remove">Repository entfernen</string>
+    <string name="repository_remove_title">%1$s entfernen?</string>
+    <string name="repository_remove_text">Daraus installierte Apps bleiben auf der Uhr, aber OpenWrist bietet für sie aus diesem Repository keine Updates mehr an.</string>
+    <string name="repository_cannot_remove">Dieses Repository gehört zu OpenWrist. Es kann abgeschaltet, aber nicht entfernt werden.</string>
+</resources>

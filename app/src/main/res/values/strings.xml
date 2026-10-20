@@ -1,0 +1,84 @@
+<resources>
+    <!-- The name stays the same in every language. -->
+    <string name="app_name" translatable="false">OpenWrist</string>
+    <string name="unofficial_client">Unofficial client for F-Droid repositories</string>
+
+    <!-- App list -->
+    <string name="search">Search</string>
+    <string name="refresh">Refresh</string>
+    <string name="refreshing">Refreshing…</string>
+    <string name="refresh_failed">Refresh failed. Tap to retry.</string>
+    <string name="app_list_empty">No watch apps yet. Refresh to load the repositories.</string>
+
+    <!-- Search -->
+    <string name="search_hint">Search apps</string>
+    <string name="search_no_results">No watch apps found</string>
+
+    <!-- App details. %1$s is a name or a version. -->
+    <string name="details_not_found">This app is not available in any enabled repository.</string>
+    <string name="details_author">By %1$s</string>
+    <string name="details_license">License: %1$s</string>
+    <string name="details_version">Version %1$s</string>
+    <string name="details_installed">Installed: %1$s</string>
+    <!-- %1$s is the installed version, %2$s the new one. -->
+    <string name="details_update_available">Update: %1$s → %2$s</string>
+    <string name="details_no_compatible_version">No version for this watch</string>
+
+    <!-- Installing -->
+    <string name="install">Install</string>
+    <string name="install_update">Update</string>
+    <string name="open">Open</string>
+    <string name="install_downloading">Downloading…</string>
+    <string name="install_verifying">Verifying…</string>
+    <string name="install_installing">Installing…</string>
+    <string name="install_retry">Try again</string>
+    <string name="install_error_download">Download failed</string>
+    <string name="install_error_verification">The download does not match the repository, so it was not installed.</string>
+    <string name="install_error_installer">The system installer could not be started.</string>
+    <string name="install_error_conflict">Conflicts with the installed app, which may be signed with another key.</string>
+    <string name="install_error_storage">Not enough storage</string>
+    <string name="install_error_incompatible">This watch does not support the app.</string>
+    <!-- %1$d is the status code of Android's package installer. -->
+    <string name="install_error_status">Installation failed (status %1$d)</string>
+    <string name="install_permission_needed">Allow installing apps</string>
+    <string name="install_permission_open_settings">Opens the settings</string>
+    <!-- %1$s is an adb command, keep it unchanged. -->
+    <string name="install_permission_adb">This watch has no setting for it. Allow it from a computer with: %1$s</string>
+
+    <!-- Updates -->
+    <string name="updates">Updates</string>
+    <string name="updates_none">All apps are up to date.</string>
+    <string name="update_other_store_title">Installed by another store</string>
+    <!-- %1$s is the name of the app store that installed the app, such as Google Play. -->
+    <string name="update_other_store_text">%1$s installed this app. Update it with OpenWrist anyway? Later updates may then come from OpenWrist instead.</string>
+    <string name="uninstall">Uninstall</string>
+    <!-- %1$d is the status code of Android's package installer. -->
+    <string name="uninstall_error">Uninstalling failed (status %1$d)</string>
+    <string name="notification_channel_updates">App updates</string>
+    <plurals name="notification_updates">
+        <item quantity="one">%d app update available</item>
+        <item quantity="other">%d app updates available</item>
+    </plurals>
+    <string name="repositories">Repositories</string>
+    <string name="add_repository">Add repository</string>
+    <string name="add_repository_hint">Repository address</string>
+    <string name="add_repository_help">Address of an F-Droid compatible repository. If it ends with ?fingerprint=…, the key is checked too.</string>
+    <string name="add_repository_load">Load</string>
+    <string name="add_repository_loading">Loading the repository…</string>
+    <string name="add_repository_fingerprint">Key fingerprint: %1$s</string>
+    <string name="add_repository_compare">Before adding, compare the fingerprint with the one the repository publishes.</string>
+    <string name="add_repository_add">Add</string>
+    <string name="add_repository_adding">Adding…</string>
+    <string name="add_repository_exists">This repository is already added.</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_repository_error_disallowed">This watch does not allow installing from unknown sources.</string>
+    <string name="add_repository_error_fingerprint">The repository is not signed with the key of this fingerprint.</string>
+    <string name="add_repository_error_archive">This is an archive. Add the main repository instead.</string>
+    <string name="add_repository_error_index">No valid repository found at this address.</string>
+    <string name="add_repository_error_io">Could not load the repository. Check the address and the connection.</string>
+    <string name="repository_remove">Remove repository</string>
+    <!-- %1$s is the name of the repository. -->
+    <string name="repository_remove_title">Remove %1$s?</string>
+    <string name="repository_remove_text">Apps installed from it stay on the watch, but OpenWrist no longer offers updates for them from this repository.</string>
+    <string name="repository_cannot_remove">This repository comes with OpenWrist. It can be disabled, but not removed.</string>
+</resources>

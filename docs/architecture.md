@@ -1,8 +1,7 @@
 # Architecture
 
-This document describes the planned structure. No module exists yet. Modules
-are created once there is code for them; until then the list below is a plan,
-not a commitment.
+This document describes the structure of OpenWrist. Modules are created once
+there is code for them.
 
 ## Ground rules
 
@@ -22,20 +21,110 @@ not a commitment.
    and sealed classes, never display strings. See
    [ADR 0004](decisions/0004-translations-with-android-resources.md).
 
-## Planned modules
+## Modules
 
-All modules live in one Gradle project. Names are a proposal.
+All modules live in one Gradle project.
 
 | Module | Responsibility |
 |---|---|
-| `repo` | Repository index: download, parse, verify, local cache |
-| `install` | APK download, verification, installation, updates |
+| `repo` | Repository index: download, verify and store it with the F-Droid libraries, answer which watch apps exist. Android library without UI |
+| `install` | APK download, verification and installation. Android library without UI |
 | `app` | Wear OS user interface (Compose for Wear OS), navigation, translations |
+
+### How the app list is filled
+
+1. `AppContainer` (in `app`) creates the F-Droid database. On first start,
+   `DefaultRepositories` adds f-droid.org (enabled) and its archive
+   (disabled), each with the certificate the index must be signed with.
+2. `RepoRefresher` runs the F-Droid library's `RepoUpdater` for every enabled
+   repository. It downloads the index, checks its signature and stores it.
+   This happens on start when an index is missing or older than a day, and
+   when the user taps "Refresh".
+3. While storing, every version is checked with `WatchCompatibilityChecker`.
+   It accepts a version only if it declares `android.hardware.type.watch` and
+   the F-Droid library's checker accepts it (SDK version, ABI of native code,
+   required features). The result is stored as `isCompatible`.
+4. `WatchApps` lists only apps with at least one compatible version. The
+   version it suggests is the newest compatible one.
+
+### How repositories are managed
+
+The Repositories screen lists every repository with a switch. Enabling and
+disabling goes through the F-Droid library's `RepoManager`, created in
+`AppContainer` with `WatchCompatibilityChecker`. Apps of disabled
+repositories are not listed. Enabling a repository refreshes the indexes
+right away, as it may have none yet.
+
+A repository is added by its address in two steps, as `RepoManager` does
+it: it downloads and verifies the index and shows a preview with the
+repository's name and key fingerprint; only when the user taps "Add" is
+the repository stored, together with its apps. If the address carries a
+`fingerprint` parameter, an index signed with another key is rejected.
+Without it, the key of the first download is trusted from then on, so the
+preview asks the user to compare the fingerprint.
+
+Tapping a repository's name opens its details. Repositories the user added
+can be removed there after confirming; `RepoManager` deletes them with their
+apps. Installed apps stay installed but get no updates from that repository
+any more. The repositories OpenWrist comes with (`DefaultRepositories`) can
+only be disabled.
+
+### How an app is installed
+
+1. The details screen shows the version `WatchApps` suggests. For a new
+   install the repository's preferred signer is tried first, then any
+   signer, because the preferred signer may belong to the phone builds only.
+   For installed apps only versions with the installed signer count.
+2. `InstallManager` downloads the APK. The F-Droid downloader tries the
+   mirrors and checks the SHA-256 hash from the signed index.
+3. `ApkVerifier` checks the file again before anything is installed: SHA-256
+   hash, package name, version code and signing certificates, all compared
+   with the signed index. Any mismatch stops the installation.
+4. `ApkInstaller` hands the APK to `PackageInstaller`. Android shows its own
+   confirmation; nothing is installed without the user agreeing.
+
+If another app store installed the app (Android records the installer),
+the details screen asks before updating it, because the update takes the
+app away from that store: after it, Android records OpenWrist as installer.
+Apps installed over ADB or by OpenWrist are updated without that question.
+
+`ApkInstaller` also uninstalls apps, again with Android's own confirmation.
+
+The user has to allow OpenWrist to install apps once. The details screen
+opens the system setting for it, or shows the ADB command if the watch has
+no such setting. The Updates screen lists installed apps with a newer watch
+build.
+
+### How the user learns about updates
+
+`UpdateCheckWorker` (in `app`) runs once a day with WorkManager, when the
+watch has network and the battery is not low. It refreshes the index if it
+is older than a day and shows a notification with the apps that have an
+update; tapping it opens the Updates screen. It never installs anything:
+every update is started and confirmed by the user. The notification needs
+the user's permission, which the app asks for when it starts.
+
+### How app icons are loaded
+
+`AppIcons` (in `repo`) downloads an app's icon from its repository with the
+same downloader as APKs, so the SHA-256 hash from the signed index is checked.
+Icons are cached in `cacheDir/icons`, named after their hash; Android may
+delete them when storage runs low, and they are downloaded again when needed.
+Without network no icon is shown.
+
+The libraries come from Maven Central, see
+[ADR 0003](decisions/0003-build-on-fdroid-libraries.md).
+
+The application ID and root package is `io.github.datend3nker.openwrist`, see
+[ADR 0006](decisions/0006-application-id.md). The app is standalone: it needs
+no companion app on the phone and no Google Play services.
 
 ## Open questions
 
-- Where the code lives: a module in the F-Droid client fork or this
-  repository, see [ADR 0003](decisions/0003-build-on-fdroid-libraries.md).
 - Installs go through `PackageInstaller` sessions with
-  `REQUEST_INSTALL_PACKAGES` and show the system confirmation dialog. How this
-  behaves on real watches is not verified yet.
+  `REQUEST_INSTALL_PACKAGES` and show the system confirmation dialog. This
+  works on the Wear OS emulator (API 37). How it behaves on real watches is
+  not verified yet (E1).
+- `ApkVerifier` reads signing certificates with
+  `getPackageArchiveInfo(GET_SIGNING_CERTIFICATES)`. Tested on API 37 only;
+  that it works the same on API 30 to 32 is an assumption.

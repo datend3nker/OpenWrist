@@ -1,0 +1,3 @@
+# R8 keep rules for OpenWrist. AGP passes every file in src/main/keepRules
+# to R8. Empty for now: no code needs a keep rule yet.
+# See https://d.android.com/r/tools/r8/keep-rules

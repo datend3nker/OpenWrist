@@ -14,8 +14,9 @@ the F-Droid libraries and only shows apps built for watches.
 > of its respective owners. Problems with OpenWrist go to this project, not to
 > F-Droid.
 
-> **Status:** planning. There is no code in this repository yet. A proof of
-> concept exists as a Wear OS module in a fork of the F-Droid client, see the
+> **Status:** early development, not released yet. The app browses,
+> installs and updates watch apps from f-droid.org, tested on the Wear OS
+> emulator only. Tests on real watches are still missing, see the
 > [roadmap](docs/roadmap.md).
 
 ## Goals
@@ -27,15 +28,17 @@ the F-Droid libraries and only shows apps built for watches.
   humans. Every commit should make sense on its own.
 - **Easy to translate.** Every user-visible string is a resource from day one.
 
-## Planned features
+## Features
 
 | Feature | State |
 |---|---|
-| Browse and search apps | planned |
-| Install apps on the watch | planned |
-| Update installed apps | planned |
-| Add and manage repositories | planned |
-| Verify index and APK signatures | planned |
+| Browse and search apps | works on the emulator |
+| Install apps on the watch | works on the emulator |
+| Update installed apps | works on the emulator |
+| Uninstall apps | works on the emulator |
+| Notify about updates once a day | works on the emulator |
+| Verify index and APK signatures | works on the emulator |
+| Add and manage repositories | works on the emulator |
 
 ## Publishing your watch app for OpenWrist
 

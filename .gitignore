@@ -1,5 +1,6 @@
 # Gradle and Android build output
 .gradle/
+.kotlin/
 build/
 local.properties
 *.apk
@@ -13,3 +14,7 @@ local.properties
 
 # Personal Claude Code settings (not shared)
 .claude/settings.local.json
+
+# Signing keys (see docs/development.md)
+*.jks
+*.keystore

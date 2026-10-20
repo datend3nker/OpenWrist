@@ -1,0 +1,31 @@
+# Checks every pull request and every push to main with the same commands
+# contributors run before committing (see docs/development.md).
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Gradle runs its daemon on JDK 21 (gradle/gradle-daemon-jvm.properties).
+      # Installing it here saves the toolchain download.
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      # Caches Gradle downloads and checks that gradle-wrapper.jar is the
+      # official one, so a pull request cannot swap in a modified wrapper.
+      - uses: gradle/actions/setup-gradle@v6
+
+      # The runner image ships the Android SDK and sets ANDROID_HOME.
+      - run: ./gradlew ktlintCheck detekt test assembleDebug
