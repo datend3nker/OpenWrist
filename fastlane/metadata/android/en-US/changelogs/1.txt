@@ -1,0 +1,7 @@
+First beta.
+- Browse and search watch apps from f-droid.org
+- Install, update and uninstall apps, with checks of the index signature, checksum and APK certificate
+- Daily check for updates with a notification
+- Add, enable, disable and remove repositories
+- Open repository links to add a repository
+- Early development, tested on the Wear OS emulator only

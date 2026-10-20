@@ -1,0 +1,7 @@
+Erste Beta.
+- Uhr-Apps von f-droid.org durchsuchen und finden
+- Apps installieren, aktualisieren und deinstallieren, mit Prüfung von Index-Signatur, Prüfsumme und APK-Zertifikat
+- Tägliche Update-Prüfung mit Benachrichtigung
+- Repositories hinzufügen, aktivieren, deaktivieren und entfernen
+- Repository-Links öffnen, um ein Repository hinzuzufügen
+- Frühe Entwicklung, nur im Wear-OS-Emulator getestet
