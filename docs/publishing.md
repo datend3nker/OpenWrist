@@ -71,6 +71,7 @@ Builds:
     versionCode: 1
     commit: v0.1.0
     subdir: app
+    prebuild: sed -i -e '/foojay/d' ../settings.gradle.kts
     gradle:
       - yes
 
@@ -84,13 +85,29 @@ CurrentVersion: 0.1.0
 CurrentVersionCode: 1
 ```
 
-Open points, *assumptions*:
+Tested on 2026-10-21 with `fdroidserver` 2.4.5 (`fdroid scanner` and
+`fdroid build -l`, without the buildserver VM, against commit `888337d`):
 
-- The `Categories` value is a guess, pick one from the F-Droid list.
-- F-Droid scans the source for non-free dependencies. The
-  [architecture](architecture.md) only uses open source libraries, but the
-  scanner result is not known yet.
-- The build has to run on F-Droid's build server with its JDK and SDK.
+- **Scanner:** it rejects the `foojay-resolver` plugin in
+  `settings.gradle.kts` ("usual suspect"). Gradle uses it to download the
+  JDK 21 for the daemon. The `prebuild` line above removes it only in
+  F-Droid's build; our own builds keep it. With it removed, F-Droid's build
+  host must provide JDK 21 itself. After that line the scanner found nothing.
+- **Build:** the APK F-Droid's process builds is byte-identical to a local
+  `assembleRelease`, except `META-INF/version-control-info.textproto`, which
+  contains the commit hash. Build and tag therefore have to be the same commit
+  for F-Droid's APK to match the developer's.
+- **Gradle 9.8.1:** `fdroidserver` 2.4.5 only knows Gradle hashes up to 8.14.2
+  and stops with "No hash for gradle version 9.8.1". The test passed only after
+  adding the official hash to a local copy of `gradlew-fdroid`. Whether
+  F-Droid's current build server knows 9.8.1 is **not verified**. If not, the
+  merge request or the Gradle version has to change.
+- **Categories:** `fdroid lint` rejected `System` only because the local test
+  directory had no `config/categories.yml`. Check the value against the real
+  `fdroiddata` checkout.
+- **Not tested:** the buildserver VM and its exact JDK and build-tools
+  versions, the `AllowedAPKSigningKeys` check (needs the real release key),
+  and `fdroid lint` against the real `fdroiddata`.
 
 ## 5. Google Play
 

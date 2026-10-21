@@ -39,7 +39,9 @@ import.
 Checked on 2026-10-21: two clean clones in different directories produce the
 same unsigned release APK (same SHA-256), see
 [publishing.md](../publishing.md#2-reproducible-build). F-Droid's own build
-server and the Play key import are still not verified.
+server and the Play key import are still not verified. A local run of
+`fdroid build` gave the same APK apart from the commit hash, with one open
+risk: Gradle 9.8.1 may be unknown to F-Droid's build server.
 
 ## Alternatives
 
