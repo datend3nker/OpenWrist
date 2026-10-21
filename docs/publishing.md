@@ -8,8 +8,9 @@ Anything marked *assumption* was not verified against the store.
 
 ## 1. Release checklist
 
-1. Create the signing key once and back it up, see
-   [development.md](development.md#release-builds).
+1. Create the app signing key once and back it up, see
+   [development.md](development.md#release-builds). For Play also create a
+   separate upload key.
 2. Make the repository public, see E7.5 in the [roadmap](roadmap.md).
 3. Check that `versionCode` and `versionName` in `app/build.gradle.kts` match
    `fastlane/metadata/android/*/changelogs/<versionCode>.txt`.
@@ -111,8 +112,10 @@ Tested on 2026-10-21 with `fdroidserver` 2.4.5 (`fdroid scanner` and
 
 ## 5. Google Play
 
-Decide this **before** the first upload: the signing key can be imported only
-when the app is created.
+Decide this **before** the first upload: the app signing key can be imported
+only when the app is created (Play Console, *Play app signing*, encrypt and
+upload the key with Google's PEPK tool). Create a separate upload key and sign
+the bundle with it, see [ADR 0007](decisions/0007-signing-key-and-stores.md).
 
 Prepare:
 
