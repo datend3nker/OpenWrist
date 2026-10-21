@@ -22,31 +22,42 @@ app's data. The application ID is already fixed, see
 
 ## Decision
 
-OpenWrist uses **one signing key** in every store it publishes to.
+OpenWrist uses **one app signing key** in every store, and a **second,
+separate upload key** for Google Play.
 
-- The key is created once and backed up. It stays on the maintainer's own
-  machine and never goes into the repository or CI, see
-  [development.md](../development.md#release-builds). Release APKs are signed
-  there with the environment variables described in that section.
-- IzzyOnDroid gets APKs signed with this key.
+- The app signing key is created once, kept offline and backed up, see
+  [development.md](../development.md#release-builds).
+- IzzyOnDroid gets APKs signed with the app signing key.
 - For f-droid.org the build is kept reproducible, so F-Droid can publish the
-  APK with this signature. F-Droid needs the certificate fingerprint of the
-  key to check it, so the fingerprint is published in the repository once the
-  key exists.
-- Google Play is only used if Play accepts the app (see Alternatives). In that
-  case the same key is imported as the app signing key when the app is
-  created. Play cannot be switched to this key afterwards. Play also wants a
-  separate **upload key**, so a leaked upload key can be reset. It is a second
-  key that only authorizes uploads to Play and does not sign what users
-  install.
+  APK with this signature.
+- For Google Play the app signing key is imported when the app is created
+  (Play App Signing, with Google's PEPK tool). Play cannot be switched to this
+  key afterwards. Google then signs the APKs it delivers with this key, so
+  Play and the other stores give users the same signature.
+- The upload key only signs the app bundle that is uploaded to Play. Google
+  recommends that it differs from the app signing key. If it is lost or
+  leaked, Play can reset it (an "upload key reset" request in the Play
+  Console), which is not possible for the app signing key. The upload key
+  therefore never needs to leave the build machine and the app signing key
+  stays offline.
 
 This is an assumption that still has to be verified for each store: that
 F-Droid accepts the build as reproducible, and that Play accepts the app and
 the key import.
 
+Checked on 2026-10-21: two clean clones in different directories produce the
+same unsigned release APK (same SHA-256), see
+[publishing.md](../publishing.md#2-reproducible-build). F-Droid's own build
+server and the Play key import are still not verified. A local run of
+`fdroid build` gave the same APK apart from the commit hash, with one open
+risk: Gradle 9.8.1 may be unknown to F-Droid's build server.
+
 ## Alternatives
 
-- **A separate key per store:** simpler to start, but users cannot move
+- **The same key for signing and upload:** one key less, but then a leak of
+  the upload key is a leak of the key every store depends on. Whether Play
+  allows it was not found in its documentation.
+- **A separate app signing key per store:** simpler to start, but users cannot move
   between stores without losing data. Fixing it later is not possible.
 - **Let each store sign with its own key:** the same problem, and the
   developer's key would not vouch for the app anywhere.
@@ -57,7 +68,11 @@ the key import.
 
 ## Consequences
 
-- Losing the signing key means no store can ship updates. Backup is mandatory.
+- Losing the app signing key means no store can ship updates. Backup is
+  mandatory. Losing the upload key is recoverable.
+- Play can later upgrade the app signing key (annual, enforced from Android 17
+  / API 37 on). F-Droid's `AllowedAPKSigningKeys` would have to follow.
+  *Assumption:* not tested, rotation is beyond this decision.
 - Builds must stay reproducible: no timestamps, no absolute paths and no
   unpinned inputs in the release build. Before each release, build the APK
   twice from a clean checkout and compare the two files, for example with

@@ -63,7 +63,18 @@ these environment variables first:
 | `OPENWRIST_KEY_ALIAS` | Alias of the key in the keystore |
 | `OPENWRIST_KEY_PASSWORD` | Password of the key |
 
-Keystores (`*.jks`, `*.keystore`) are ignored by Git. Keep the key and its
+Keep the variables of each key in an env file outside the repository, or
+copy [`signing.env.example`](../signing.env.example) to `signing-app.env`
+(app signing key, for APKs) or `signing-upload.env` (Google Play upload key, see
+[ADR 0007](decisions/0007-signing-key-and-stores.md)). Gradle does not read
+these files, load them into the shell first:
+
+```sh
+set -a; source signing-app.env; set +a
+./gradlew assembleRelease
+```
+
+Keystores (`*.jks`, `*.keystore`) and these env files are ignored by Git. Keep the key and its
 passwords outside the repository and back them up: Android installs updates
 only if they are signed with the same key as the installed version.
 

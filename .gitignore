@@ -18,3 +18,8 @@ local.properties
 # Signing keys (see docs/development.md)
 *.jks
 *.keystore
+
+# Signing variables (see signing.env.example)
+signing-*.env
+signing.env
+.env
