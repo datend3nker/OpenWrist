@@ -1,6 +1,6 @@
 # 0005: License under GPL-3.0-or-later
 
-- **Status:** accepted (review before the repository goes public)
+- **Status:** accepted
 - **Date:** 2026-10-09
 
 ## Context
