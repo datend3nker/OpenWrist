@@ -42,8 +42,8 @@ separate upload key** for Google Play.
   stays offline.
 
 This is an assumption that still has to be verified for each store: that
-F-Droid accepts the build as reproducible, and that Play accepts the key
-import.
+F-Droid accepts the build as reproducible, and that Play accepts the app and
+the key import.
 
 Checked on 2026-10-21: two clean clones in different directories produce the
 same unsigned release APK (same SHA-256), see
@@ -61,9 +61,10 @@ risk: Gradle 9.8.1 may be unknown to F-Droid's build server.
   between stores without losing data. Fixing it later is not possible.
 - **Let each store sign with its own key:** the same problem, and the
   developer's key would not vouch for the app anywhere.
-- **Skip Google Play:** avoids the second key, but loses the audience that only
-  uses Play. Whether Play accepts an app that installs other apps is not
-  verified yet and may decide this.
+- **Skip Google Play:** needs no key import and no upload key, but loses the
+  audience that only uses Play. Whether Play accepts an app that installs
+  other apps is not verified yet. If it does not, this is the outcome, and the
+  rest of the decision stays as it is.
 
 ## Consequences
 
@@ -73,6 +74,9 @@ risk: Gradle 9.8.1 may be unknown to F-Droid's build server.
   / API 37 on). F-Droid's `AllowedAPKSigningKeys` would have to follow.
   *Assumption:* not tested, rotation is beyond this decision.
 - Builds must stay reproducible: no timestamps, no absolute paths and no
-  unpinned inputs in the release build.
+  unpinned inputs in the release build. Before each release, build the APK
+  twice from a clean checkout and compare the two files, for example with
+  `cmp` or `diffoscope`. A difference means f-droid.org would sign with its
+  own key.
 - The Play decision has to be made before the first Play upload, because the
   key import cannot be done later.
