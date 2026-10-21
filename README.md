@@ -109,6 +109,7 @@ companion is needed to install it with OpenWrist.
 - [Development setup](docs/development.md): get a machine ready to build OpenWrist
 - [Architecture](docs/architecture.md): module layout and ground rules
 - [Roadmap](docs/roadmap.md): order of work
+- [Publishing](docs/publishing.md): release checklist and store submissions
 - [Decisions](docs/decisions/): why things are built the way they are (ADRs)
 - [Contributing](CONTRIBUTING.md): commits, code style, documentation
 - [AGENTS.md](AGENTS.md): rules for AI agents working in this repo

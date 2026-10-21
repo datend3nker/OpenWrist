@@ -36,6 +36,11 @@ This is an assumption that still has to be verified for each store: that
 F-Droid accepts the build as reproducible, and that Play accepts the key
 import.
 
+Checked on 2026-10-21: two clean clones in different directories produce the
+same unsigned release APK (same SHA-256), see
+[publishing.md](../publishing.md#2-reproducible-build). F-Droid's own build
+server and the Play key import are still not verified.
+
 ## Alternatives
 
 - **A separate key per store:** simpler to start, but users cannot move
