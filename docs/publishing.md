@@ -76,9 +76,10 @@ Builds:
     gradle:
       - yes
 
-# Publish the developer's signature (needs the reproducible build above).
-# Replace with the SHA-256 of the release certificate.
-AllowedAPKSigningKeys: <sha256 of the release certificate>
+# Publish the developer's signature: F-Droid builds the tag, takes the
+# signature from this APK and publishes the result if both are identical.
+Binaries: https://github.com/datend3nker/OpenWrist/releases/download/v%v/OpenWrist-%v.apk
+AllowedAPKSigningKeys: b713c36083293e7bb99af4e9bd88f4f31ab1951b69ecaffb4220feb306eac161
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
@@ -106,9 +107,27 @@ Tested on 2026-10-21 with `fdroidserver` 2.4.5 (`fdroid scanner` and
 - **Categories:** `fdroid lint` rejected `System` only because the local test
   directory had no `config/categories.yml`. Check the value against the real
   `fdroiddata` checkout.
+- **Reproducible against the release:** on 2026-10-22 the tag `v0.1.0`
+  (`218cfdd`) was built with this recipe. `apksigcopier compare` between the
+  GitHub release APK and that build succeeded: same files, same CRCs. F-Droid
+  can therefore publish the developer's signature. The certificate
+  fingerprint in `AllowedAPKSigningKeys` is that of the app signing key, see
+  [ADR 0007](decisions/0007-signing-key-and-stores.md).
 - **Not tested:** the buildserver VM and its exact JDK and build-tools
-  versions, the `AllowedAPKSigningKeys` check (needs the real release key),
-  and `fdroid lint` against the real `fdroiddata`.
+  versions, and `fdroid lint` against the real `fdroiddata`.
+- **Generative AI:** the F-Droid
+  [inclusion policy](https://f-droid.org/docs/Inclusion_Policy/) does not
+  mention it. As of 2026-10-22 two proposals are open and undecided: an
+  [interim policy](https://gitlab.com/fdroid/admin/-/work_items/699) that is
+  neutral and encourages disclosure (it covers contributions to F-Droid
+  itself, not apps), and a
+  [request](https://gitlab.com/fdroid/admin/-/work_items/641) to tag apps that
+  use AI with an anti-feature. OpenWrist says in its README that it is built
+  with AI; keep saying it in the merge request. Reviewers may ask about it.
+- **Installer:** the policy does not mention `REQUEST_INSTALL_PACKAGES` or
+  `QUERY_ALL_PACKAGES`. It forbids downloading executable files without the
+  user's consent. OpenWrist downloads and installs an app only after the user
+  asked for it and Android confirmed. Expect questions about this.
 
 ## 5. Google Play
 
