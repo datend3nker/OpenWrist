@@ -52,13 +52,19 @@ Needed: repository URL, the signed APK in a release, license
 
 A merge request to
 [fdroiddata](https://gitlab.com/fdroid/fdroiddata) adds
-`metadata/io.github.datend3nker.openwrist.yml`. Draft, to be checked against
-the current [metadata reference](https://f-droid.org/docs/Build_Metadata_Reference/):
+`metadata/io.github.datend3nker.openwrist.yml` and nothing else. The merge
+request title is "New app: OpenWrist". The recipe below passed
+`fdroid lint`, `fdroid rewritemeta` (no changes) and `fdroid checkupdates` on
+2026-10-22. Rules from F-Droid's merge request template that matter here:
+`commit` is the full hash, not the tag; no description, changelog or images in
+the metadata (they come from `fastlane/` in this repository); the fork must be
+public with an unprotected branch; one app per merge request.
 
 ```yaml
 Categories:
   - System
 License: GPL-3.0-or-later
+AuthorName: datend3nker
 SourceCode: https://github.com/datend3nker/OpenWrist
 IssueTracker: https://github.com/datend3nker/OpenWrist/issues
 
@@ -66,19 +72,17 @@ AutoName: OpenWrist
 
 RepoType: git
 Repo: https://github.com/datend3nker/OpenWrist.git
+Binaries: https://github.com/datend3nker/OpenWrist/releases/download/v%v/OpenWrist-%v.apk
 
 Builds:
   - versionName: 0.1.0
     versionCode: 1
-    commit: v0.1.0
+    commit: 218cfdd1001b1ad357cc217849d7b7abd2954e37
     subdir: app
-    prebuild: sed -i -e '/foojay/d' ../settings.gradle.kts
     gradle:
       - yes
+    prebuild: sed -i -e '/foojay/d' ../settings.gradle.kts
 
-# Publish the developer's signature: F-Droid builds the tag, takes the
-# signature from this APK and publishes the result if both are identical.
-Binaries: https://github.com/datend3nker/OpenWrist/releases/download/v%v/OpenWrist-%v.apk
 AllowedAPKSigningKeys: b713c36083293e7bb99af4e9bd88f4f31ab1951b69ecaffb4220feb306eac161
 
 AutoUpdateMode: Version
