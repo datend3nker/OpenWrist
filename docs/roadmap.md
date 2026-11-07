@@ -97,7 +97,7 @@ other watches may need ADB.
 
 **Tickets:**
 
-- [ ] **E2.1** Measure index download, parse and store time on a real watch · `research` `repo`
+- [x] **E2.1** Measure index download, parse and store time on a real watch · `research` `repo`
 - [ ] **E2.2** Measure storage and memory use of the index · `research` `repo`
 - [ ] **E2.3** Evaluate ways to speed up the first import · `research` `repo`
   - For example index diffs, dropping non-watch apps early or importing in
