@@ -24,8 +24,14 @@ test on a real watch.
 
 The first start downloads the whole f-droid.org index (about 63 MB). On the
 `WearOS-GMS` emulator image (API 37, x86_64) download and import took about
-two minutes (2026-10-14). Later refreshes only download changes. Not measured
-on a real watch yet (E2).
+two minutes (2026-10-14). Later refreshes only download changes.
+
+On a Galaxy Watch 7 (SM-L310, Wear OS 6, API 36) with a release build, the
+first download and import took about 70 seconds over Wi-Fi, using up to two
+CPU cores and up to 145 MB memory (RSS). Afterwards the app used no CPU while
+idle. Installing Immich Wear took 2 seconds from tapping "Install" to the
+system confirmation and 2 seconds after confirming (2026-11-07). The watch
+was charging, so battery use was not measured.
 
 On the same emulator, installing Catima's watch build (versionCode 201) and
 updating from build 200 to 201 worked, including the system confirmation
