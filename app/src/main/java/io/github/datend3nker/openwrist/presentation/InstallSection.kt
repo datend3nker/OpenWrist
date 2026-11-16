@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageInstaller
 import android.provider.Settings
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,7 +19,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.core.net.toUri
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
-import androidx.wear.compose.material3.CircularProgressIndicator
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.Text
 import io.github.datend3nker.openwrist.R
@@ -70,14 +68,7 @@ private fun ProgressButton(
         onClick = {},
         enabled = false,
         modifier = Modifier.fillMaxWidth(),
-        icon = {
-            val size = Modifier.size(ButtonDefaults.IconSize)
-            if (progress == null) {
-                CircularProgressIndicator(modifier = size)
-            } else {
-                CircularProgressIndicator(progress = { progress }, modifier = size)
-            }
-        },
+        icon = { ProgressIcon(progress) },
         label = { Text(label) },
     )
 }

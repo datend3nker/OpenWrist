@@ -1,7 +1,6 @@
 package io.github.datend3nker.openwrist.presentation
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -14,7 +13,6 @@ import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
-import androidx.wear.compose.material3.CircularProgressIndicator
 import androidx.wear.compose.material3.ListHeader
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.Text
@@ -96,16 +94,7 @@ private fun RefreshButton(
                 onClick = {},
                 enabled = false,
                 modifier = Modifier.fillMaxWidth(),
-                icon = {
-                    // Icon size, so the label next to it stays readable.
-                    val size = Modifier.size(ButtonDefaults.IconSize)
-                    val progress = state.progress
-                    if (progress == null) {
-                        CircularProgressIndicator(modifier = size)
-                    } else {
-                        CircularProgressIndicator(progress = { progress }, modifier = size)
-                    }
-                },
+                icon = { ProgressIcon(state.progress) },
                 label = { Text(stringResource(R.string.refreshing)) },
             )
         is RefreshState.Failed ->

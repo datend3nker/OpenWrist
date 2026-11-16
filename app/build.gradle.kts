@@ -37,9 +37,11 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.findByName("release")
+            // Shrinks all code, including the F-Droid libraries (Ktor, Glide):
+            // the APK goes from 9.8 MB to 4.9 MB. The F-Droid libraries need
+            // keep rules for index diff updates, see repo/consumer-rules.pro.
             optimization {
                 enable = true
-                packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")
             }
         }
     }
